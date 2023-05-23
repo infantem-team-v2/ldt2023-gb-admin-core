@@ -1,0 +1,7 @@
+BaseCalculate:
+  httpMethod: POST
+  route: /base
+
+ImprovedCalculate:
+  httpMethod: POST
+  route: /

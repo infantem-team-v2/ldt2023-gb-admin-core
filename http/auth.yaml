@@ -1,0 +1,35 @@
+VendorAuth:
+  httpMethod: POST
+  route: /
+
+SignUp:
+  httpMethod: POST
+  route: /sign/up
+
+SignIn:
+  httpMethod: POST
+  route: /sign/in
+
+SignOut:
+  httpMethod: DELETE
+  route: /sign/out
+
+ValidateEmail:
+  httpMethod: POST
+  route: /email/validate
+
+ResetPassword:
+  httpMethod: PUT
+  route: /password/reset
+
+PrepareResetPassword:
+  httpMethod: PATCH
+  route: /password/reset/prepare
+
+ValidateResetPassword:
+  httpMethod: PATCH
+  route: /password/reset/validate
+
+Check:
+  httpMethod: GET
+  route: /check

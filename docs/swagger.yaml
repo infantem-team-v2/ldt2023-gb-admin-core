@@ -1,0 +1,549 @@
+definitions:
+  common.Response:
+    properties:
+      description:
+        type: string
+      internal_code:
+        type: integer
+    type: object
+  model.BaseCalculateRequest:
+    type: object
+  model.BaseCalculateResponse:
+    properties:
+      input_data:
+        items:
+          $ref: '#/definitions/model.BasicCalculationFieldLogic'
+        type: array
+      output_data:
+        items:
+          $ref: '#/definitions/model.BasicCategoryCalculationLogic'
+        type: array
+    type: object
+  model.BasicCalculationFieldLogic:
+    properties:
+      field:
+        type: string
+      value:
+        type: string
+    type: object
+  model.BasicCategoryCalculationLogic:
+    properties:
+      category:
+        type: string
+      data:
+        items:
+          $ref: '#/definitions/model.BasicCalculationFieldLogic'
+        type: array
+    type: object
+  model.BusinessDataLogic:
+    properties:
+      economic_activity:
+        example: Производство
+        type: string
+      inn:
+        example: "7707083893"
+        type: string
+      name:
+        example: ООО ИНФАНТЕМ
+        type: string
+      website:
+        example: infantem.tech
+        type: string
+    required:
+    - inn
+    type: object
+  model.EmailValidateRequest:
+    properties:
+      code:
+        type: integer
+    required:
+    - code
+    type: object
+  model.EmailValidateResponse:
+    properties:
+      description:
+        type: string
+      internal_code:
+        type: integer
+      valid:
+        type: boolean
+    type: object
+  model.PersonalDataLogic:
+    properties:
+      full_name:
+        example: Иванов Иван Иванович
+        type: string
+      geographic:
+        properties:
+          city:
+            example: Москва
+            type: string
+          country:
+            example: Российская Федерация
+            type: string
+        type: object
+      position:
+        example: Старший менеджер по инвестициям
+        type: string
+    required:
+    - full_name
+    type: object
+  model.PrepareResetPasswordRequest:
+    properties:
+      email:
+        type: string
+    required:
+    - email
+    type: object
+  model.PrepareResetPasswordResponse:
+    properties:
+      description:
+        type: string
+      internal_code:
+        type: integer
+      session_key:
+        type: string
+    type: object
+  model.RegistrationDataLogic:
+    properties:
+      email:
+        example: example@mail.ru
+        type: string
+      password:
+        example: 1234qwerty!
+        type: string
+      repeated_password:
+        example: 1234qwerty!
+        type: string
+    required:
+    - email
+    - password
+    - repeated_password
+    type: object
+  model.ResetPasswordRequest:
+    properties:
+      password:
+        type: string
+      repeated_password:
+        type: string
+    required:
+    - password
+    - repeated_password
+    type: object
+  model.ResetPasswordResponse:
+    properties:
+      description:
+        type: string
+      internal_code:
+        type: integer
+    type: object
+  model.SignInRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  model.SignInResponse:
+    properties:
+      description:
+        type: string
+      email:
+        type: string
+      internal_code:
+        type: integer
+    type: object
+  model.SignOutResponse:
+    properties:
+      description:
+        type: string
+      internal_code:
+        type: integer
+    type: object
+  model.SignUpRequest:
+    properties:
+      auth_data:
+        $ref: '#/definitions/model.RegistrationDataLogic'
+      business_data:
+        $ref: '#/definitions/model.BusinessDataLogic'
+      personal_data:
+        $ref: '#/definitions/model.PersonalDataLogic'
+    type: object
+  model.SignUpResponse:
+    properties:
+      description:
+        type: string
+      internal_code:
+        type: integer
+    type: object
+  model.ValidateResetPasswordRequest:
+    properties:
+      validation_code:
+        type: string
+    required:
+    - validation_code
+    type: object
+  model.ValidateResetPasswordResponse:
+    properties:
+      description:
+        type: string
+      internal_code:
+        type: integer
+    type: object
+host: gate.gb.ldt2023.infantem.tech
+info:
+  contact:
+    email: KlenoviySir@yandex.ru
+    name: Docs developer
+    url: https://t.me/KlenoviySirop
+  description: JWT token in authorization bearer
+  title: Core backend app for Leaders of Digital Transformation
+  version: 1.0.0
+paths:
+  /auth:
+    post:
+      consumes:
+      - application/json
+      description: Accepts token from vendor which we process and returning pair of
+        tokens
+      parameters:
+      - description: Vendor which is providing authorization
+        enum:
+        - apple
+        - google
+        in: query
+        name: vendor
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Sign in or sign up via external vendor
+      tags:
+      - Authorization
+  /auth/check:
+    get:
+      description: Validates that session is authorized
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Health and auth check
+      tags:
+      - Authorization
+  /auth/email/validate:
+    post:
+      consumes:
+      - application/json
+      description: Validating user's email with take message on email and writing
+        code
+      parameters:
+      - description: Data for validation by email from app
+        in: body
+        name: code
+        required: true
+        schema:
+          $ref: '#/definitions/model.EmailValidateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.EmailValidateResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Validating user's email
+      tags:
+      - Authorization
+  /auth/password/reset:
+    put:
+      consumes:
+      - application/json
+      description: Resetting password by getting validated email for password change
+      parameters:
+      - description: Session key to identify that this is current session of password
+          change
+        in: header
+        name: t-session-key
+        required: true
+        type: string
+      - description: New password pair with confirmation to update credentials
+        in: body
+        name: new_pswds
+        required: true
+        schema:
+          $ref: '#/definitions/model.ResetPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResetPasswordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Resetting password
+      tags:
+      - Authorization
+      - Password
+  /auth/password/reset/prepare:
+    patch:
+      consumes:
+      - application/json
+      description: Creates session for password reset
+      parameters:
+      - description: Session key for backend's session validation
+        in: body
+        name: new_pswds
+        required: true
+        schema:
+          $ref: '#/definitions/model.PrepareResetPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PrepareResetPasswordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Make reset password session
+      tags:
+      - Authorization
+      - Password
+  /auth/password/reset/validate:
+    patch:
+      consumes:
+      - application/json
+      description: Validate reset password session by code that user gets on its email
+      parameters:
+      - description: Session key to identify that this is current session of password
+          change
+        in: header
+        name: t-session-key
+        required: true
+        type: string
+      - description: Code from email to validate request
+        in: body
+        name: new_pswds
+        required: true
+        schema:
+          $ref: '#/definitions/model.ValidateResetPasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ValidateResetPasswordResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Validate reset password session
+      tags:
+      - Authorization
+      - Password
+  /auth/sign/in:
+    post:
+      consumes:
+      - application/json
+      description: Authorization and get access token
+      parameters:
+      - description: Authorization data from user
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.SignInRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.SignInResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Sign in
+      tags:
+      - Authorization
+  /auth/sign/out:
+    delete:
+      consumes:
+      - application/json
+      description: Delete tokens
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.SignOutResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Sign out
+      tags:
+      - Authorization
+  /auth/sign/up:
+    post:
+      consumes:
+      - application/json
+      description: Sign up with data which was in our task
+      parameters:
+      - description: Authorization data from user
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.SignUpRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SignUpResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Sign up with base data
+      tags:
+      - Authorization
+  /calc:
+    post:
+      consumes:
+      - application/json
+      description: Calculations with authorization
+      parameters:
+      - description: Basic parameters for base calculator w/o auth
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.BaseCalculateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BaseCalculateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Improved calculation w/ auth
+      tags:
+      - Calculator
+  /calc/base:
+    post:
+      consumes:
+      - application/json
+      description: Base calculation without authorization for landing page
+      parameters:
+      - description: Basic parameters for base calculator w/o auth
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.BaseCalculateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BaseCalculateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Base calculation
+      tags:
+      - Calculator
+schemes:
+- https
+swagger: "2.0"

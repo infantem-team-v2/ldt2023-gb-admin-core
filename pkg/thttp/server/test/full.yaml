@@ -1,0 +1,12 @@
+VendorAuth:
+  httpMethod: POST
+  route: /
+
+SignIn:
+  httpMethod: POST
+  route: /sign/in
+
+SignUp:
+  httpMethod: POST
+  route: /sign/up
+

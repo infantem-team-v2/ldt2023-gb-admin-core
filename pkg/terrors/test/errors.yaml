@@ -1,0 +1,19 @@
+
+0:
+  message: unknown error
+  statusCode: 500
+# 1xxxxx codes is user's side problem
+100000:
+  message: happened unknown error because of user's actions
+  statusCode: 400
+100001:
+  message: a
+  statusCode: 401
+# 2xxxxx our vendor problem
+200000:
+  message: unknown error on external api's side
+  statusCode: 409
+# 3xxxxx our internal problem
+300000:
+  message: unknown error inside system
+  statusCode: 500

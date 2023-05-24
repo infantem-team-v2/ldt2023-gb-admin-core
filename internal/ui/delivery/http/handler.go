@@ -37,7 +37,7 @@ func (uh *UiHandler) GetPrefix() string {
 // @Failure 403 {object} common.Response
 // @Failure 422 {object} common.Response
 // @Failure 409 {object} common.Response
-// @Router /auth/check [get]
+// @Router /ui/calc/element/active [get]
 func (uh *UiHandler) GetCalcActiveElements() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		response, statusCode, err := uh.UiUC.GetCalcActiveElements()

@@ -1,6 +1,7 @@
 package model
 
 type BaseCalculateRequest struct {
+	Inputs []*BasicCalculationFieldLogic `json:"inputs"`
 }
 
 type BaseCalculateResponse struct {

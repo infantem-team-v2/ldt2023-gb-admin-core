@@ -786,7 +786,15 @@ const docTemplate = `{
             }
         },
         "model.BaseCalculateRequest": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "inputs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.BasicCalculationFieldLogic"
+                    }
+                }
+            }
         },
         "model.BaseCalculateResponse": {
             "type": "object",

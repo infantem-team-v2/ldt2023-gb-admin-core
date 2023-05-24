@@ -66,6 +66,11 @@ definitions:
     - full_name
     type: object
   model.BaseCalculateRequest:
+    properties:
+      inputs:
+        items:
+          $ref: '#/definitions/model.BasicCalculationFieldLogic'
+        type: array
     type: object
   model.BaseCalculateResponse:
     properties:

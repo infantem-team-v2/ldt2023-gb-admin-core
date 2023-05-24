@@ -17,17 +17,20 @@ func MakeAuthHeaders(body interface{}, publicKey, privateKey string, method stri
 	if err != nil {
 		return nil, err
 	}
-
-	bodyBytes, mErr := json.Marshal(body)
-	if mErr != nil {
-		return nil, mErr
+	signature := ""
+	if body != nil {
+		bodyBytes, mErr := json.Marshal(body)
+		if mErr != nil {
+			return nil, mErr
+		}
+		_, mErr = strBuilder.WriteString(string(bodyBytes))
+		if mErr != nil {
+			return nil, mErr
+		}
+		signature = tsecure.CalcSignature(privateKey, strBuilder.String(), tsecure.SHA512)
+	} else {
+		signature = tsecure.CalcSignature(privateKey, "", tsecure.SHA512)
 	}
-	_, mErr = strBuilder.WriteString(string(bodyBytes))
-	if mErr != nil {
-		return nil, mErr
-	}
-
-	signature := tsecure.CalcSignature(privateKey, strBuilder.String(), tsecure.SHA512)
 
 	headers[ContentTypeKey] = TypeApplicationJSON.String()
 	headers["ApiPublic"] = publicKey

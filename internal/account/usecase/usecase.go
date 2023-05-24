@@ -41,6 +41,7 @@ func (auc *AccountUseCase) GetCommonInfo(userId int64) (*model.GetCommonInfoResp
 			Inn:              business.Inn,
 			Name:             business.Name,
 			EconomicActivity: business.EconomicActivity,
+			Website:          business.Website,
 		},
 	}, nil
 }

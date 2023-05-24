@@ -37,3 +37,14 @@ func (cu *CalculationsUseCase) BaseCalculate(params *model.BaseCalculateRequest)
 		},
 	}, nil
 }
+
+func (cu *CalculationsUseCase) ImprovedCalculate(params *model.BaseCalculateRequest) (*model.ImprovedCalculateResponse, error) {
+	baseResponse, err := cu.BaseCalculate(params)
+	if err != nil {
+		return nil, err
+	}
+	return &model.ImprovedCalculateResponse{
+		BaseCalculateResponse: *baseResponse,
+		Link:                  "http://abobus.amogus/trahni_psa.pdf",
+	}, nil
+}

@@ -71,7 +71,7 @@ func (ch *CalculationsHandler) ImprovedCalculate() fiber.Handler {
 			return terrors.Raise(err, 100001)
 		}
 
-		response, err := ch.CalculationsUC.BaseCalculate(&params)
+		response, err := ch.CalculationsUC.ImprovedCalculate(&params)
 		if err != nil {
 			return err
 		}

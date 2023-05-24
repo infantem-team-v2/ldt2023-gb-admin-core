@@ -7,4 +7,5 @@ const (
 	SignatureKey  string = "t-512-signature"
 	PublicKey     string = "t-public-key"
 	ValidationKey string = "t-validation-session"
+	UserIdLocals  string = "userId"
 )

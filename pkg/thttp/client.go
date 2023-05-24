@@ -21,7 +21,7 @@ func BuildHttpClient(ctn di.Container) (interface{}, error) {
 	cfg := ctn.Get("config").(*config.Config)
 	logger := ctn.Get("logger").(tlogger.ILogger)
 	httpClient := http.Client{
-		Name:         "bank-client",
+		Name:         "ldt2023-client",
 		ReadTimeout:  time.Duration(cfg.HttpConfig.TimeOut) * time.Second,
 		WriteTimeout: time.Duration(cfg.HttpConfig.TimeOut) * time.Second,
 	}

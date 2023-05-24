@@ -1,0 +1,7 @@
+GetCommonInfo:
+  httpMethod: GET
+  route: /info
+
+UpdateCommonInfo:
+  httpMethod: PUT
+  route: /info/update

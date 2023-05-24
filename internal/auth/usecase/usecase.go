@@ -44,7 +44,7 @@ func (as *AuthUC) SignUp(params *model.SignUpRequest) (*model.SignUpResponse, er
 		return nil, terrors.Raise(nil, 100014)
 	}
 	// TODO: add validation for inn by FNS api and getting company's name by same way
-	if params.BusinessData.Name == nil {
+	if params.BusinessData.Name == nil || *params.BusinessData.Name == "" {
 		if len(*params.BusinessData.INN) == 12 {
 			params.BusinessData.Name = ptr.String(fmt.Sprintf("ИП %s", *params.PersonalData.FullName))
 		}

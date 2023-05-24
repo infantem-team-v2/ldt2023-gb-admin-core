@@ -2,6 +2,8 @@ package dependency
 
 import (
 	"gb-auth-gate/config"
+	accountRepo "gb-auth-gate/internal/account/repository"
+	accountUC "gb-auth-gate/internal/account/usecase"
 	authRepo "gb-auth-gate/internal/auth/repository"
 	authUC "gb-auth-gate/internal/auth/usecase"
 	calcUC "gb-auth-gate/internal/calculations/usecase"
@@ -44,6 +46,9 @@ var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
 	"calcUC": calcUC.BuildCalculationsUseCase,
 
 	"uiUC": uiUC.BuildUiUseCase,
+
+	"accountRepo": accountRepo.BuildPostgresRepository,
+	"accountUC":   accountUC.BuildAccountUseCase,
 
 	"app": server.BuildFiberApp,
 }

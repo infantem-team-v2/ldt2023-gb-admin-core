@@ -75,6 +75,8 @@ definitions:
           $ref: '#/definitions/model.UiElementLogic'
         type: array
     type: object
+  model.GetCommonInfoResponse:
+    type: object
   model.PersonalDataLogic:
     properties:
       full_name:
@@ -222,6 +224,37 @@ info:
   title: Core backend app for Leaders of Digital Transformation
   version: 1.0.0
 paths:
+  /account/info:
+    get:
+      description: Endpoint to get information about user
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetCommonInfoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Get information about user
+      tags:
+      - Account
   /auth:
     post:
       consumes:

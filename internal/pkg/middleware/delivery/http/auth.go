@@ -83,7 +83,7 @@ func (mdw *MiddlewareManager) JWTMiddleware() fiber.Handler {
 				HTTPOnly: true,
 				SameSite: "None",
 			})
-
+			c.Locals(mdwModel.UserIdLocals, userId)
 			return c.Next()
 		}
 		claims, err := server.ParseJwtToken(accessToken, mdw.Config.HttpConfig.JWTSalt)
@@ -99,6 +99,7 @@ func (mdw *MiddlewareManager) JWTMiddleware() fiber.Handler {
 			return terrors.Raise(nil, 100011)
 		}
 
+		c.Locals(mdwModel.UserIdLocals, userId)
 		return c.Next()
 	}
 }

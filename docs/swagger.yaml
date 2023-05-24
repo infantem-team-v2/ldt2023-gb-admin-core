@@ -68,6 +68,13 @@ definitions:
       valid:
         type: boolean
     type: object
+  model.GetCalcActiveElementsResponse:
+    properties:
+      elements:
+        items:
+          $ref: '#/definitions/model.UiElementLogic'
+        type: array
+    type: object
   model.PersonalDataLogic:
     properties:
       full_name:
@@ -179,6 +186,18 @@ definitions:
       internal_code:
         type: integer
     type: object
+  model.UiElementLogic:
+    properties:
+      comment:
+        type: string
+      field:
+        type: string
+      options:
+        items: {}
+        type: array
+      type:
+        type: string
+    type: object
   model.ValidateResetPasswordRequest:
     properties:
       validation_code:
@@ -234,10 +253,12 @@ paths:
       - Authorization
   /auth/check:
     get:
-      description: Validates that session is authorized
+      description: Get specification for ui elements to visualise it on frontend
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/model.GetCalcActiveElementsResponse'
         "400":
           description: Bad Request
           schema:
@@ -250,9 +271,17 @@ paths:
           description: Forbidden
           schema:
             $ref: '#/definitions/common.Response'
-      summary: Health and auth check
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Get UI elements for calculator
       tags:
-      - Authorization
+      - UI
   /auth/email/validate:
     post:
       consumes:

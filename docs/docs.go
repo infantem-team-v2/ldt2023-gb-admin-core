@@ -64,14 +64,17 @@ const docTemplate = `{
         },
         "/auth/check": {
             "get": {
-                "description": "Validates that session is authorized",
+                "description": "Get specification for ui elements to visualise it on frontend",
                 "tags": [
-                    "Authorization"
+                    "UI"
                 ],
-                "summary": "Health and auth check",
+                "summary": "Get UI elements for calculator",
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetCalcActiveElementsResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
@@ -87,6 +90,18 @@ const docTemplate = `{
                     },
                     "403": {
                         "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
                         "schema": {
                             "$ref": "#/definitions/common.Response"
                         }
@@ -639,6 +654,17 @@ const docTemplate = `{
                 }
             }
         },
+        "model.GetCalcActiveElementsResponse": {
+            "type": "object",
+            "properties": {
+                "elements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.UiElementLogic"
+                    }
+                }
+            }
+        },
         "model.PersonalDataLogic": {
             "type": "object",
             "required": [
@@ -803,6 +829,24 @@ const docTemplate = `{
                 },
                 "internal_code": {
                     "type": "integer"
+                }
+            }
+        },
+        "model.UiElementLogic": {
+            "type": "object",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "field": {
+                    "type": "string"
+                },
+                "options": {
+                    "type": "array",
+                    "items": {}
+                },
+                "type": {
+                    "type": "string"
                 }
             }
         },

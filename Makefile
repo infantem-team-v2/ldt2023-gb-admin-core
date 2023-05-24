@@ -1,4 +1,3 @@
-include .env
 
 .DEFAULT_GOAL := update
 

@@ -33,9 +33,9 @@ func MakeAuthHeaders(body interface{}, publicKey, privateKey string, method stri
 	}
 
 	headers[ContentTypeKey] = TypeApplicationJSON.String()
-	headers["ApiPublic"] = publicKey
+	headers["T-Public-Key"] = publicKey
 	headers["TimeStamp"] = strconv.Itoa(int(timestamp))
-	headers["Signature"] = signature
+	headers["T-512-Signature"] = signature
 
 	return headers, nil
 }

@@ -6,6 +6,63 @@ definitions:
       internal_code:
         type: integer
     type: object
+  internal_account_model.BusinessDataLogic:
+    properties:
+      economic_activity:
+        type: string
+      inn:
+        type: string
+      name:
+        type: string
+    type: object
+  internal_account_model.PersonalDataLogic:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      geography:
+        type: string
+      job_position:
+        type: string
+    type: object
+  internal_auth_model.BusinessDataLogic:
+    properties:
+      economic_activity:
+        example: Производство
+        type: string
+      inn:
+        example: "7707083893"
+        type: string
+      name:
+        example: ООО ИНФАНТЕМ
+        type: string
+      website:
+        example: infantem.tech
+        type: string
+    required:
+    - inn
+    type: object
+  internal_auth_model.PersonalDataLogic:
+    properties:
+      full_name:
+        example: Иванов Иван Иванович
+        type: string
+      geographic:
+        properties:
+          city:
+            example: Москва
+            type: string
+          country:
+            example: Российская Федерация
+            type: string
+        type: object
+      position:
+        example: Старший менеджер по инвестициям
+        type: string
+    required:
+    - full_name
+    type: object
   model.BaseCalculateRequest:
     type: object
   model.BaseCalculateResponse:
@@ -35,23 +92,6 @@ definitions:
           $ref: '#/definitions/model.BasicCalculationFieldLogic'
         type: array
     type: object
-  model.BusinessDataLogic:
-    properties:
-      economic_activity:
-        example: Производство
-        type: string
-      inn:
-        example: "7707083893"
-        type: string
-      name:
-        example: ООО ИНФАНТЕМ
-        type: string
-      website:
-        example: infantem.tech
-        type: string
-    required:
-    - inn
-    type: object
   model.EmailValidateRequest:
     properties:
       code:
@@ -76,26 +116,11 @@ definitions:
         type: array
     type: object
   model.GetCommonInfoResponse:
-    type: object
-  model.PersonalDataLogic:
     properties:
-      full_name:
-        example: Иванов Иван Иванович
-        type: string
-      geographic:
-        properties:
-          city:
-            example: Москва
-            type: string
-          country:
-            example: Российская Федерация
-            type: string
-        type: object
-      position:
-        example: Старший менеджер по инвестициям
-        type: string
-    required:
-    - full_name
+      business_data:
+        $ref: '#/definitions/internal_account_model.BusinessDataLogic'
+      personal_data:
+        $ref: '#/definitions/internal_account_model.PersonalDataLogic'
     type: object
   model.PrepareResetPasswordRequest:
     properties:
@@ -177,9 +202,9 @@ definitions:
       auth_data:
         $ref: '#/definitions/model.RegistrationDataLogic'
       business_data:
-        $ref: '#/definitions/model.BusinessDataLogic'
+        $ref: '#/definitions/internal_auth_model.BusinessDataLogic'
       personal_data:
-        $ref: '#/definitions/model.PersonalDataLogic'
+        $ref: '#/definitions/internal_auth_model.PersonalDataLogic'
     type: object
   model.SignUpResponse:
     properties:

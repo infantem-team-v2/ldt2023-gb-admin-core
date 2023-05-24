@@ -634,6 +634,90 @@
                 }
             }
         },
+        "internal_account_model.BusinessDataLogic": {
+            "type": "object",
+            "properties": {
+                "economic_activity": {
+                    "type": "string"
+                },
+                "inn": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_account_model.PersonalDataLogic": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string"
+                },
+                "geography": {
+                    "type": "string"
+                },
+                "job_position": {
+                    "type": "string"
+                }
+            }
+        },
+        "internal_auth_model.BusinessDataLogic": {
+            "type": "object",
+            "required": [
+                "inn"
+            ],
+            "properties": {
+                "economic_activity": {
+                    "type": "string",
+                    "example": "Производство"
+                },
+                "inn": {
+                    "type": "string",
+                    "example": "7707083893"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "ООО ИНФАНТЕМ"
+                },
+                "website": {
+                    "type": "string",
+                    "example": "infantem.tech"
+                }
+            }
+        },
+        "internal_auth_model.PersonalDataLogic": {
+            "type": "object",
+            "required": [
+                "full_name"
+            ],
+            "properties": {
+                "full_name": {
+                    "type": "string",
+                    "example": "Иванов Иван Иванович"
+                },
+                "geographic": {
+                    "type": "object",
+                    "properties": {
+                        "city": {
+                            "type": "string",
+                            "example": "Москва"
+                        },
+                        "country": {
+                            "type": "string",
+                            "example": "Российская Федерация"
+                        }
+                    }
+                },
+                "position": {
+                    "type": "string",
+                    "example": "Старший менеджер по инвестициям"
+                }
+            }
+        },
         "model.BaseCalculateRequest": {
             "type": "object"
         },
@@ -679,30 +763,6 @@
                 }
             }
         },
-        "model.BusinessDataLogic": {
-            "type": "object",
-            "required": [
-                "inn"
-            ],
-            "properties": {
-                "economic_activity": {
-                    "type": "string",
-                    "example": "Производство"
-                },
-                "inn": {
-                    "type": "string",
-                    "example": "7707083893"
-                },
-                "name": {
-                    "type": "string",
-                    "example": "ООО ИНФАНТЕМ"
-                },
-                "website": {
-                    "type": "string",
-                    "example": "infantem.tech"
-                }
-            }
-        },
         "model.EmailValidateRequest": {
             "type": "object",
             "required": [
@@ -740,34 +800,13 @@
             }
         },
         "model.GetCommonInfoResponse": {
-            "type": "object"
-        },
-        "model.PersonalDataLogic": {
             "type": "object",
-            "required": [
-                "full_name"
-            ],
             "properties": {
-                "full_name": {
-                    "type": "string",
-                    "example": "Иванов Иван Иванович"
+                "business_data": {
+                    "$ref": "#/definitions/internal_account_model.BusinessDataLogic"
                 },
-                "geographic": {
-                    "type": "object",
-                    "properties": {
-                        "city": {
-                            "type": "string",
-                            "example": "Москва"
-                        },
-                        "country": {
-                            "type": "string",
-                            "example": "Российская Федерация"
-                        }
-                    }
-                },
-                "position": {
-                    "type": "string",
-                    "example": "Старший менеджер по инвестициям"
+                "personal_data": {
+                    "$ref": "#/definitions/internal_account_model.PersonalDataLogic"
                 }
             }
         },
@@ -891,10 +930,10 @@
                     "$ref": "#/definitions/model.RegistrationDataLogic"
                 },
                 "business_data": {
-                    "$ref": "#/definitions/model.BusinessDataLogic"
+                    "$ref": "#/definitions/internal_auth_model.BusinessDataLogic"
                 },
                 "personal_data": {
-                    "$ref": "#/definitions/model.PersonalDataLogic"
+                    "$ref": "#/definitions/internal_auth_model.PersonalDataLogic"
                 }
             }
         },

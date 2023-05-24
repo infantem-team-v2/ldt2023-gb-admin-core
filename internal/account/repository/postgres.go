@@ -31,7 +31,28 @@ func (p *PostgresRepository) GetPersonalUserInfo(userId int64) (*model.UserDAO, 
 			 WHERE us.id = $1;
 		 	 `
 	var data model.UserDAO
-	err := p.db.Select(&data, query, userId)
+	err := p.db.Get(&data, query, userId)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, terrors.Raise(err, 100017)
+		}
+		return nil, terrors.Raise(err, 100018)
+	}
+
+	return &data, nil
+}
+
+func (p *PostgresRepository) GetBusinessInfo(userId int64) (*model.BusinessDAO, error) {
+	query := `
+			 SELECT
+				bs.inn, bs.name, bs.economic_activity
+  			 FROM
+  			    personal.business bs
+			 WHERE
+			    user_id = $1;
+			 `
+	var data model.BusinessDAO
+	err := p.db.Get(&data, query, userId)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, terrors.Raise(err, 100017)

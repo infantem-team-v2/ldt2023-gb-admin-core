@@ -32,13 +32,13 @@ func (uuc *UiUseCase) GetCalcActiveElements() (interface{}, uint16, error) {
 
 	var response model.GetCalcActiveElementsResponse
 
-	headers, err := thttpHeaders.MakeAuthHeaders(nil, service.PublicKey, service.PrivateKey, "GET")
+	headers, err := thttpHeaders.MakeAuthHeaders("", service.PublicKey, service.PrivateKey, "GET")
 	fmt.Printf("\n%+v\n", headers)
 	rawResponse, statusCode, err := uuc.HttpClient.Request(
 		thttp.GET,
 		fmt.Sprintf("%s/calc/element/active", service.URL),
 		headers,
-		nil,
+		"",
 		&response,
 		nil,
 	)

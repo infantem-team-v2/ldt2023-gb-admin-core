@@ -33,6 +33,7 @@ func (uuc *UiUseCase) GetCalcActiveElements() (interface{}, uint16, error) {
 	var response model.GetCalcActiveElementsResponse
 
 	headers, err := thttpHeaders.MakeAuthHeaders(nil, service.PublicKey, service.PrivateKey, "GET")
+	fmt.Printf("\n%+v\n", headers)
 	rawResponse, statusCode, err := uuc.HttpClient.Request(
 		thttp.GET,
 		fmt.Sprintf("%s/calc/element/active", service.URL),
@@ -49,6 +50,7 @@ func (uuc *UiUseCase) GetCalcActiveElements() (interface{}, uint16, error) {
 		if err := json.Unmarshal(rawResponse, &commonResponse); err != nil {
 			return nil, 0, terrors.Raise(err, 200005)
 		}
+		return commonResponse, statusCode, nil
 	}
 	return response, statusCode, nil
 }

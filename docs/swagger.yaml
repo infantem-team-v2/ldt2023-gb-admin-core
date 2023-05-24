@@ -70,9 +70,9 @@ definitions:
     type: object
   model.GetCalcActiveElementsResponse:
     properties:
-      elements:
+      categories:
         items:
-          $ref: '#/definitions/model.UiElementLogic'
+          $ref: '#/definitions/model.UiCategoryLogic'
         type: array
     type: object
   model.GetCommonInfoResponse:
@@ -187,6 +187,17 @@ definitions:
         type: string
       internal_code:
         type: integer
+    type: object
+  model.UiCategoryLogic:
+    properties:
+      category:
+        type: string
+      category_id:
+        type: string
+      elements:
+        items:
+          $ref: '#/definitions/model.UiElementLogic'
+        type: array
     type: object
   model.UiElementLogic:
     properties:

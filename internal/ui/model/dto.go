@@ -1,7 +1,7 @@
 package model
 
 type GetCalcActiveElementsResponse struct {
-	Elements []*UiElementLogic `json:"elements"`
+	Elements []*UiCategoryLogic `json:"categories"`
 }
 
 type GetTypesResponse struct {

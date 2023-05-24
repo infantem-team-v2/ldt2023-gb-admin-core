@@ -736,10 +736,10 @@ const docTemplate = `{
         "model.GetCalcActiveElementsResponse": {
             "type": "object",
             "properties": {
-                "elements": {
+                "categories": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.UiElementLogic"
+                        "$ref": "#/definitions/model.UiCategoryLogic"
                     }
                 }
             }
@@ -911,6 +911,23 @@ const docTemplate = `{
                 },
                 "internal_code": {
                     "type": "integer"
+                }
+            }
+        },
+        "model.UiCategoryLogic": {
+            "type": "object",
+            "properties": {
+                "category": {
+                    "type": "string"
+                },
+                "category_id": {
+                    "type": "string"
+                },
+                "elements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.UiElementLogic"
+                    }
                 }
             }
         },

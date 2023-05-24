@@ -923,6 +923,9 @@ const docTemplate = `{
                 "field": {
                     "type": "string"
                 },
+                "field_id": {
+                    "type": "string"
+                },
                 "options": {
                     "type": "array",
                     "items": {}

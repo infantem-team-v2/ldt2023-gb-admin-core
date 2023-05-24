@@ -2,6 +2,7 @@ package model
 
 type UiElementLogic struct {
 	Field   string        `json:"field"`
+	FieldId string        `json:"field_id"`
 	Comment string        `json:"comment"`
 	Type    string        `json:"type"`
 	Options []interface{} `json:"options"`

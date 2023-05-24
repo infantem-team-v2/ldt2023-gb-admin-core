@@ -129,6 +129,19 @@ definitions:
       personal_data:
         $ref: '#/definitions/internal_account_model.PersonalDataLogic'
     type: object
+  model.ImprovedCalculateResponse:
+    properties:
+      input_data:
+        items:
+          $ref: '#/definitions/model.BasicCalculationFieldLogic'
+        type: array
+      link:
+        type: string
+      output_data:
+        items:
+          $ref: '#/definitions/model.BasicCategoryCalculationLogic'
+        type: array
+    type: object
   model.PrepareResetPasswordRequest:
     properties:
       email:
@@ -654,7 +667,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.BaseCalculateResponse'
+            $ref: '#/definitions/model.ImprovedCalculateResponse'
         "400":
           description: Bad Request
           schema:

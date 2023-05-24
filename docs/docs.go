@@ -586,7 +586,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.BaseCalculateResponse"
+                            "$ref": "#/definitions/model.ImprovedCalculateResponse"
                         }
                     },
                     "400": {
@@ -882,6 +882,26 @@ const docTemplate = `{
                 },
                 "personal_data": {
                     "$ref": "#/definitions/internal_account_model.PersonalDataLogic"
+                }
+            }
+        },
+        "model.ImprovedCalculateResponse": {
+            "type": "object",
+            "properties": {
+                "input_data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.BasicCalculationFieldLogic"
+                    }
+                },
+                "link": {
+                    "type": "string"
+                },
+                "output_data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.BasicCategoryCalculationLogic"
+                    }
                 }
             }
         },

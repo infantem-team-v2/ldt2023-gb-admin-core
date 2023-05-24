@@ -61,7 +61,7 @@ func (ch *CalculationsHandler) BaseCalculate() fiber.Handler {
 // @Accept json
 // @Produce json
 // @Param data body model.BaseCalculateRequest true "Basic parameters for base calculator w/o auth"
-// @Success 200 {object} model.BaseCalculateResponse
+// @Success 200 {object} model.ImprovedCalculateResponse
 // @Failure 400 {object} common.Response
 // @Router /calc [post]
 func (ch *CalculationsHandler) ImprovedCalculate() fiber.Handler {

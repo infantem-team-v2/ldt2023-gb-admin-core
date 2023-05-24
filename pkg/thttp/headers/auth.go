@@ -22,11 +22,8 @@ func MakeAuthHeaders(body interface{}, publicKey, privateKey string, method stri
 	if mErr != nil {
 		return nil, mErr
 	}
-	_, mErr = strBuilder.WriteString(string(bodyBytes))
-	if mErr != nil {
-		return nil, mErr
-	}
-	signature := tsecure.CalcSignature(privateKey, strBuilder.String(), tsecure.SHA512)
+	
+	signature := tsecure.CalcSignature(privateKey, string(bodyBytes), tsecure.SHA512)
 
 	headers[ContentTypeKey] = TypeApplicationJSON.String()
 	headers["T-Public-Key"] = publicKey

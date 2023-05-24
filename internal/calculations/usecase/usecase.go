@@ -17,6 +17,13 @@ func BuildCalculationsUseCase(ctn di.Container) (interface{}, error) {
 }
 
 func (cu *CalculationsUseCase) BaseCalculate(params *model.BaseCalculateRequest) (*model.BaseCalculateResponse, error) {
+	filteredInputs := make([]*model.BasicCalculationFieldLogic, 0, len(params.Inputs))
+	for _, inputs := range params.Inputs {
+		if inputs.Value != nil {
+			filteredInputs = append(filteredInputs, inputs)
+		}
+	}
+
 	return &model.BaseCalculateResponse{
 		InputData: []*model.BasicCalculationFieldLogic{
 			{

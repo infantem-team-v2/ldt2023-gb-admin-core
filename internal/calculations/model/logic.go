@@ -1,8 +1,8 @@
 package model
 
 type BasicCalculationFieldLogic struct {
-	Field string `json:"field"`
-	Value string `json:"value"`
+	Field string      `json:"field"`
+	Value interface{} `json:"value"`
 }
 
 type BasicCategoryCalculationLogic struct {

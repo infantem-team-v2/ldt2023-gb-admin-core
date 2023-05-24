@@ -87,8 +87,7 @@ definitions:
     properties:
       field:
         type: string
-      value:
-        type: string
+      value: {}
     type: object
   model.BasicCategoryCalculationLogic:
     properties:

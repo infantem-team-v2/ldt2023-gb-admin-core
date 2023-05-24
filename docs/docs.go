@@ -819,9 +819,7 @@ const docTemplate = `{
                 "field": {
                     "type": "string"
                 },
-                "value": {
-                    "type": "string"
-                }
+                "value": {}
             }
         },
         "model.BasicCategoryCalculationLogic": {

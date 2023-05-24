@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	"gb-auth-gate/internal/account/model"
@@ -45,7 +46,7 @@ func (p *PostgresRepository) GetPersonalUserInfo(userId int64) (*model.UserDAO, 
 func (p *PostgresRepository) GetBusinessInfo(userId int64) (*model.BusinessDAO, error) {
 	query := `
 			 SELECT
-				bs.inn, bs.name, bs.economic_activity
+				bs.inn, bs.name, bs.economic_activity, bs.website
   			 FROM
   			    personal.business bs
 			 WHERE
@@ -61,4 +62,85 @@ func (p *PostgresRepository) GetBusinessInfo(userId int64) (*model.BusinessDAO, 
 	}
 
 	return &data, nil
+}
+
+func (p *PostgresRepository) UpdatePersonalInfo(ctx context.Context, params *model.UpdateUserDataDAO) error {
+	tx, err := p.db.BeginTxx(ctx, &sql.TxOptions{
+		Isolation: sql.LevelReadUncommitted,
+		ReadOnly:  false,
+	})
+	if err != nil {
+		return terrors.Raise(err, 300006)
+	}
+	defer tx.Rollback()
+
+	query := `
+			 UPDATE
+				personal.user
+			 SET
+			    full_name = :full_name,
+			    email = :email,
+			    job_position = :job_position
+			 WHERE
+			     id = :user_id
+			 RETURNING geo_position_id;
+			 `
+	namedQuery, err := tx.PrepareNamed(query)
+	if err != nil {
+		return terrors.Raise(err, 300007)
+	}
+
+	var geoId int64
+
+	err = namedQuery.QueryRowx(params).Scan(&geoId)
+	if err != nil {
+		return terrors.Raise(err, 300008)
+	}
+	params.GeoId = geoId
+
+	query = `
+		 	UPDATE
+				personal.geography
+		 	SET 
+		 	    city = :city,
+				country = :country
+		 	WHERE
+		 	    id = :geo_id
+			RETURNING id;
+			
+		 	`
+	namedQuery, err = tx.PrepareNamed(query)
+	if err != nil {
+		return terrors.Raise(err, 300007)
+	}
+	err = namedQuery.QueryRowx(params).Scan(&geoId)
+	if err != nil {
+		return terrors.Raise(err, 300008)
+	}
+
+	query = `
+			UPDATE
+				personal.business
+			SET
+				inn = :inn,
+				name = :name,
+				economic_activity = :economic_activity,
+				website = :website
+			WHERE
+			    user_id = :user_id
+			RETURNING id;
+			`
+	namedQuery, err = tx.PrepareNamed(query)
+	if err != nil {
+		return terrors.Raise(err, 300007)
+	}
+	err = namedQuery.QueryRowx(params).Scan(&geoId)
+	if err != nil {
+		return terrors.Raise(err, 300008)
+	}
+	err = tx.Commit()
+	if err != nil {
+		return terrors.Raise(err, 300009)
+	}
+	return nil
 }

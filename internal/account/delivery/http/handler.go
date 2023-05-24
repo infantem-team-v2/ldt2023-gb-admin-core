@@ -2,7 +2,9 @@ package http
 
 import (
 	accountInterface "gb-auth-gate/internal/account/interface"
+	"gb-auth-gate/internal/account/model"
 	mdwModel "gb-auth-gate/internal/pkg/middleware/model"
+	"gb-auth-gate/pkg/terrors"
 	"gb-auth-gate/pkg/thttp/server"
 	"github.com/gofiber/fiber/v2"
 )
@@ -50,8 +52,29 @@ func (ah *AccountHandler) GetCommonInfo() fiber.Handler {
 	}
 }
 
+// UpdateCommonInfo godoc
+// @Summary Update user's information
+// @Description Endpoint to get information about user
+// @Tags Account
+// @Param updated_data body model.UpdateUserInfoRequest true "Updated information about user"
+// @Success 200 {object} model.GetCommonInfoResponse
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Router /account/info [put]
 func (ah *AccountHandler) UpdateCommonInfo() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
-		return nil
+		userId := ctx.Locals(mdwModel.UserIdLocals).(int64)
+		var params model.UpdateUserInfoRequest
+		if err := server.ReadRequest(ctx, &params); err != nil {
+			return terrors.Raise(err, 100001)
+		}
+		response, err := ah.AccountUC.UpdateUserInfo(userId, &params)
+		if err != nil {
+			return err
+		}
+		return ctx.JSON(response)
 	}
 }

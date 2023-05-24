@@ -1,10 +1,12 @@
 package usecase
 
 import (
+	"context"
 	accountInterface "gb-auth-gate/internal/account/interface"
 	"gb-auth-gate/internal/account/model"
 	"gb-auth-gate/pkg/thttp"
 	"github.com/sarulabs/di"
+	"strings"
 )
 
 type AccountUseCase struct {
@@ -41,4 +43,35 @@ func (auc *AccountUseCase) GetCommonInfo(userId int64) (*model.GetCommonInfoResp
 			EconomicActivity: business.EconomicActivity,
 		},
 	}, nil
+}
+
+func (auc *AccountUseCase) UpdateUserInfo(userId int64, params *model.UpdateUserInfoRequest) (*model.GetCommonInfoResponse, error) {
+	geoSlice := strings.Split(params.PersonalData.Geography, ", ")
+	if len(geoSlice) < 2 {
+		if len(geoSlice) < 1 {
+			geoSlice = []string{"Москва", "Россия"}
+		} else {
+			geoSlice = append(geoSlice, "Россия")
+		}
+	}
+	err := auc.accountRepo.UpdatePersonalInfo(context.Background(), &model.UpdateUserDataDAO{
+		UserId: userId,
+
+		FullName:    params.PersonalData.FullName,
+		Email:       params.PersonalData.Email,
+		JobPosition: params.PersonalData.JobPosition,
+
+		City:    geoSlice[0],
+		Country: geoSlice[1],
+
+		Inn:              params.BusinessData.Inn,
+		Name:             params.BusinessData.Name,
+		EconomicActivity: params.BusinessData.EconomicActivity,
+		Website:          params.BusinessData.Website,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return auc.GetCommonInfo(userId)
 }

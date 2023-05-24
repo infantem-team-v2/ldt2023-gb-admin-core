@@ -98,3 +98,12 @@
 300006:
   message: can't create and write user
   statusCode: 422
+300007:
+  message: can't update user info
+  statusCode: 409
+300008:
+  message: can't update user info
+  statusCode: 422
+300009:
+  message: can't commit user info's update
+  statusCode: 409

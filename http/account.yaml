@@ -4,4 +4,4 @@ GetCommonInfo:
 
 UpdateCommonInfo:
   httpMethod: PUT
-  route: /info/update
+  route: /info

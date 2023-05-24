@@ -77,7 +77,7 @@ func (ah *AuthHandler) VendorAuth() fiber.Handler {
 // SignUp godoc
 // @Summary Sign up with base data
 // @Description Sign up with data which was in our task
-// @Tags Authorization
+// @Tags Authorization, Login
 // @Accept json
 // @Produce json
 // @Param data body model.SignUpRequest true "Authorization data from user"
@@ -107,7 +107,7 @@ func (ah *AuthHandler) SignUp() fiber.Handler {
 // SignIn godoc
 // @Summary Sign in
 // @Description Authorization and get access token
-// @Tags Authorization
+// @Tags Authorization, Login
 // @Accept json
 // @Produce json
 // @Param data body model.SignInRequest true "Authorization data from user"
@@ -135,7 +135,7 @@ func (ah *AuthHandler) SignIn() fiber.Handler {
 // SignOut godoc
 // @Summary Sign out
 // @Description Delete tokens
-// @Tags Authorization
+// @Tags Authorization, Login
 // @Accept json
 // @Produce json
 // @Success 200 {object} model.SignOutResponse

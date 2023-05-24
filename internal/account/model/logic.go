@@ -11,4 +11,5 @@ type BusinessDataLogic struct {
 	Inn              string `json:"inn"`
 	Name             string `json:"name"`
 	EconomicActivity string `json:"economic_activity"`
+	Website          string `json:"website"`
 }

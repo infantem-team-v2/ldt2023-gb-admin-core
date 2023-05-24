@@ -10,6 +10,7 @@ type UseCase interface {
 	ValidateEmail(params *model.EmailValidateRequest) (*model.EmailValidateResponse, error)
 
 	ValidateService(params *model.AuthHeadersLogic) (bool, error)
+	GetAuthServiceByName(name string) (*model.AuthServiceDAO, error)
 
 	GenerateAccessToken(refreshToken string, params *model.CreateAuthTokensLogic) (accessToken string, err error)
 	GenerateTokensPair(params *model.CreateAuthTokensLogic) (accessToken, refreshToken string, err error)

@@ -4,6 +4,7 @@ import (
 	"gb-auth-gate/config"
 	"github.com/fernet/fernet-go"
 	"github.com/sarulabs/di"
+	"time"
 )
 
 type FernetCrypto struct {
@@ -23,9 +24,12 @@ func BuildFernetEncryptor(ctn di.Container) (interface{}, error) {
 }
 
 func (fe *FernetCrypto) Encrypt(message string) (cipher string, err error) {
-	return fe.Encrypt(message)
+	tok, err := fernet.EncryptAndSign([]byte(message), fe.EncryptionKey)
+	return string(tok), err
 }
 
 func (fe *FernetCrypto) Decrypt(cipher string) (message string, err error) {
-	return fe.Decrypt(cipher)
+	message = string(fernet.VerifyAndDecrypt([]byte(cipher), 0*time.Second, []*fernet.Key{fe.EncryptionKey}))
+
+	return message, nil
 }

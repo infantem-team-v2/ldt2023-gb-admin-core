@@ -2,7 +2,6 @@ package thttpHeaders
 
 import (
 	"encoding/json"
-	"gb-auth-gate/pkg/thttp"
 	"gb-auth-gate/pkg/tsecure"
 	"strconv"
 	"strings"
@@ -18,21 +17,14 @@ func MakeAuthHeaders(body interface{}, publicKey, privateKey string, method stri
 	if err != nil {
 		return nil, err
 	}
-	if method == thttp.GET {
 
-		_, mErr := strBuilder.WriteString(publicKey)
-		if mErr != nil {
-			return nil, mErr
-		}
-	} else {
-		bodyBytes, mErr := json.Marshal(body)
-		if mErr != nil {
-			return nil, mErr
-		}
-		_, mErr = strBuilder.WriteString(string(bodyBytes))
-		if mErr != nil {
-			return nil, mErr
-		}
+	bodyBytes, mErr := json.Marshal(body)
+	if mErr != nil {
+		return nil, mErr
+	}
+	_, mErr = strBuilder.WriteString(string(bodyBytes))
+	if mErr != nil {
+		return nil, mErr
 	}
 
 	signature := tsecure.CalcSignature(privateKey, strBuilder.String(), tsecure.SHA512)

@@ -57,7 +57,7 @@ func (hc *ThttpClient) Request(
 	reqHeaders map[string]string,
 	reqParams, destStruct interface{},
 	queryParams map[string]interface{},
-) (rawResponse interface{}, statusCode uint16, err error) {
+) (rawResponse []byte, statusCode uint16, err error) {
 	req := http.AcquireRequest()
 	var queryString string
 	if queryParams != nil {
@@ -75,20 +75,17 @@ func (hc *ThttpClient) Request(
 	}
 	req.SetBody(reqParamsData)
 	var resp http.Response
-	//----------------TEST---------------->//
-	httpClient := http.Client{Name: "bank-client", ReadTimeout: time.Duration(10) * time.Second, WriteTimeout: time.Duration(10) * time.Second}
-	err = httpClient.Do(req, &resp)
-	//<----------------TEST----------------//
-	//err = hc.httpClient.Do(req, &resp) //PROD
+	err = hc.httpClient.Do(req, &resp)
+
 	if err != nil {
 		return nil, 0, err
 	}
 	err = json.Unmarshal(resp.Body(), destStruct)
 	if err != nil {
-		return nil, 0, err
+		return resp.Body(), uint16(resp.StatusCode()), nil
 	}
 	hc.logRequest(req, &resp)
-	return destStruct, uint16(resp.StatusCode()), nil
+	return resp.Body(), uint16(resp.StatusCode()), nil
 }
 
 func (hc *ThttpClient) logRequest(req *http.Request, res *http.Response) {

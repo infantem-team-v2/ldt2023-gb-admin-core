@@ -1,0 +1,3 @@
+GetCalcActiveElements:
+  httpMethod: GET
+  route: /calc/element/active

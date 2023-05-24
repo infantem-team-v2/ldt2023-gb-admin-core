@@ -68,6 +68,8 @@
 200004:
   message: can't make full logout
   statusCode: 200
+200005:
+  message: can't get correct response from external api
 # 3xxxxx our internal problem
 300000:
   message: unknown error inside system

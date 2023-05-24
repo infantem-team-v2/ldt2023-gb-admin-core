@@ -6,6 +6,7 @@ import (
 	authUC "gb-auth-gate/internal/auth/usecase"
 	calcUC "gb-auth-gate/internal/calculations/usecase"
 	mdwHttp "gb-auth-gate/internal/pkg/middleware/delivery/http"
+	uiUC "gb-auth-gate/internal/ui/usecase"
 	"gb-auth-gate/pkg/damqp/kafka"
 	"gb-auth-gate/pkg/damqp/rabbit"
 	"gb-auth-gate/pkg/terrors"
@@ -41,6 +42,8 @@ var dependencyMap = map[string]func(ctn di.Container) (interface{}, error){
 	"stacktraceHandler": terrors.BuildStacktraceHandler,
 
 	"calcUC": calcUC.BuildCalculationsUseCase,
+
+	"uiUC": uiUC.BuildUiUseCase,
 
 	"app": server.BuildFiberApp,
 }

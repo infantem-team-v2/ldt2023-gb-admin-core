@@ -129,7 +129,7 @@ func (as *AuthUC) SignIn(params *model.SignInRequest) (*model.SignInResponse, er
 }
 
 func (as *AuthUC) ValidateService(params *model.AuthHeadersLogic) (bool, error) {
-	service, err := as.authRepo.FindServiceByName(params.PublicKey)
+	service, err := as.authRepo.FindServiceByPublicKey(params.PublicKey)
 	if err != nil {
 		return false, err
 	}
@@ -147,6 +147,20 @@ func (as *AuthUC) ValidateService(params *model.AuthHeadersLogic) (bool, error) 
 	}
 
 	return false, terrors.Raise(nil, 100003)
+}
+
+func (as *AuthUC) GetAuthServiceByName(name string) (*model.AuthServiceDAO, error) {
+	service, err := as.authRepo.FindServiceByName(name)
+	if err != nil {
+		return nil, err
+	}
+	decryptedPrivateKey, err := as.fernet.Decrypt(service.PrivateKey)
+	if err != nil {
+		return nil, terrors.Raise(err, 200003)
+	}
+	service.PrivateKey = decryptedPrivateKey
+
+	return service, nil
 }
 
 func (as *AuthUC) GenerateAccessToken(refreshToken string, params *model.CreateAuthTokensLogic) (accessToken string, err error) {

@@ -3,8 +3,10 @@ package http
 import (
 	calculationsInterface "gb-auth-gate/internal/calculations/interface"
 	"gb-auth-gate/internal/calculations/model"
+	mdwModel "gb-auth-gate/internal/pkg/middleware/model"
 	"gb-auth-gate/pkg/terrors"
 	"gb-auth-gate/pkg/thttp/server"
+	"gb-auth-gate/pkg/tutils/ptr"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -45,7 +47,7 @@ func (ch *CalculationsHandler) BaseCalculate() fiber.Handler {
 		if err := server.ReadRequest(ctx, &params); err != nil {
 			return terrors.Raise(err, 100001)
 		}
-		response, err := ch.CalculationsUC.BaseCalculate(&params)
+		response, err := ch.CalculationsUC.BaseCalculate(&params, nil)
 		if err != nil {
 			return err
 		}
@@ -70,8 +72,9 @@ func (ch *CalculationsHandler) ImprovedCalculate() fiber.Handler {
 		if err := server.ReadRequest(ctx, &params); err != nil {
 			return terrors.Raise(err, 100001)
 		}
+		userId := ctx.Locals(mdwModel.UserIdLocals).(int64)
+		response, err := ch.CalculationsUC.ImprovedCalculate(&params, ptr.Int(int(userId)))
 
-		response, err := ch.CalculationsUC.ImprovedCalculate(&params)
 		if err != nil {
 			return err
 		}

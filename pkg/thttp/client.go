@@ -41,9 +41,9 @@ func (hc *ThttpClient) MakeQueryString(
 	for k, v := range queryParams {
 		switch queryCount {
 		case 0:
-			query += fmt.Sprintf("?%s=%s", k, v)
+			query += fmt.Sprintf("?%s=%v", k, v)
 		default:
-			query += fmt.Sprintf("&%s=%s", k, v)
+			query += fmt.Sprintf("&%s=%v", k, v)
 		}
 		queryCount++
 	}

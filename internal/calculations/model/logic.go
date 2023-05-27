@@ -6,7 +6,7 @@ type BasicCompanyLogic struct {
 	WorkersQuantity   *int     `json:"workers_quantity"`
 	Industry          *string  `json:"industry"`
 	County            *string  `json:"county"`
-	LandArea          *int     `json:"land_area,string"`
+	LandArea          *int     `json:"land_area"`
 	BuildingArea      *int     `json:"building_area"`
 	MachineNames      []string `json:"machine_names"`
 	MachineQuantities []int    `json:"machine_quantities"`

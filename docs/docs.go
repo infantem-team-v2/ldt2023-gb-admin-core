@@ -1082,7 +1082,29 @@ const docTemplate = `{
             }
         },
         "model.GetResultsByUserResponse": {
-            "type": "object"
+            "type": "object",
+            "properties": {
+                "results": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "report_id": {
+                                "type": "string"
+                            },
+                            "summary": {
+                                "type": "integer"
+                            },
+                            "time_stamp": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
         },
         "model.ImprovedCalculateResponse": {
             "type": "object",

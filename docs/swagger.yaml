@@ -224,6 +224,20 @@ definitions:
         $ref: '#/definitions/internal_account_model.PersonalDataLogic'
     type: object
   model.GetResultsByUserResponse:
+    properties:
+      results:
+        items:
+          properties:
+            name:
+              type: string
+            report_id:
+              type: string
+            summary:
+              type: integer
+            time_stamp:
+              type: string
+          type: object
+        type: array
     type: object
   model.ImprovedCalculateResponse:
     properties:

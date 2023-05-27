@@ -91,7 +91,7 @@ func (auc *AccountUseCase) GetResultsByUser(userId int64) (interface{}, uint16, 
 		return nil, 0, err
 	}
 
-	var response model.GetCommonInfoResponse
+	var response model.GetResultsByUserResponse
 
 	headers, err := thttpHeaders.MakeAuthHeaders("", service.PublicKey, service.PrivateKey, "GET")
 	fmt.Printf("\n%+v\n", headers)

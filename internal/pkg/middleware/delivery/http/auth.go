@@ -39,7 +39,8 @@ func (mdw *MiddlewareManager) JWTMiddleware() fiber.Handler {
 			!strings.Contains(path, "check")) ||
 			strings.Contains(path, "/base") ||
 			strings.Contains(path, "/docs") ||
-			strings.Contains(path, "/ui/") {
+			strings.Contains(path, "/ui/") ||
+			strings.Contains(path, "/calc/report") {
 			return c.Next()
 		}
 		var err error

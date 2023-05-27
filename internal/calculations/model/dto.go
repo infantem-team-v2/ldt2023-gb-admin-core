@@ -4,53 +4,6 @@ type BaseCalculateRequest struct {
 	BasicCompanyLogic
 }
 
-type BaseCalculateResponse struct {
-	TrackerID     string `json:"tracker_id"`
-	TotalExpenses int    `json:"total_expenses"`
-	Output        struct {
-		Service struct {
-			ServiceExpenses     int `json:"service_expenses"`
-			DutyExpenses        int `json:"duty_expenses"`
-			BookkeepingExpenses int `json:"bookkeeping_expenses"`
-			PatentExpenses      int `json:"patent_expenses"`
-			MachineExpenses     int `json:"machine_expenses"`
-		} `json:"service"`
-		Estate struct {
-			EstateExpenses   int `json:"estate_expenses"`
-			LandExpenses     int `json:"land_expenses"`
-			BuildingExpenses int `json:"building_expenses"`
-		} `json:"estate"`
-		Staff struct {
-			StaffExpenses    int `json:"staff_expenses"`
-			SalariesExpenses int `json:"salaries_expenses"`
-			PensionExpenses  int `json:"pension_expenses"`
-			MedicalExpenses  int `json:"medical_expenses"`
-		} `json:"staff"`
-		Tax struct {
-			TaxExpenses int `json:"tax_expenses"`
-			LandTax     int `json:"land_tax"`
-			EstateTax   int `json:"estate_tax"`
-			IncomeTax   int `json:"income_tax"`
-		} `json:"tax"`
-	} `json:"output"`
-	Input struct {
-		ProjectName       *string  `json:"project_name,omitempty"`
-		OrganizationType  *string  `json:"organization_type,omitempty"`
-		WorkersQuantity   *int     `json:"workers_quantity,omitempty"`
-		Industry          *string  `json:"industry,omitempty"`
-		County            *string  `json:"county,omitempty"`
-		LandArea          *int     `json:"land_area,omitempty"`
-		BuildingArea      *int     `json:"building_area,omitempty"`
-		MachineNames      []string `json:"machine_names,omitempty"`
-		MachineQuantities []int    `json:"machine_quantities,omitempty"`
-		PatentType        *string  `json:"patent_type,omitempty"`
-		Bookkeeping       *bool    `json:"bookkeeping,omitempty"`
-		TaxSystem         *string  `json:"tax_system,omitempty"`
-		Operations        *int     `json:"operations,omitempty"`
-		OtherNeeds        []string `json:"other_needs,omitempty"`
-	} `json:"input"`
-}
-
 type ImprovedCalculateResponse struct {
 	BaseCalculateResponse
 	Link string `json:"link"`
@@ -63,4 +16,51 @@ type GetCalculatorConstantResponse struct {
 		Needs      []string `json:"needs"`
 		Patents    []string `json:"patents"`
 	} `json:"data"`
+}
+
+type BaseCalculateResponse struct {
+	TrackerID     string `json:"tracker_id" rus:"Идентификатор_отчёта"`
+	TotalExpenses int    `json:"total_expenses" rus:"Суммарные_затраты"`
+	Output        struct {
+		Service struct {
+			ServiceExpenses     int `json:"service_expenses" rus:"Суммарные_затраты_на_услуги"`
+			DutyExpenses        int `json:"duty_expenses" rus:"Пошлина"`
+			BookkeepingExpenses int `json:"bookkeeping_expenses" rus:"Бухгалтерия"`
+			PatentExpenses      int `json:"patent_expenses" rus:"Патент"`
+			MachineExpenses     int `json:"machine_expenses" rus:"Оборудование"`
+		} `json:"service" rus:"Услуги"`
+		Estate struct {
+			EstateExpenses   int `json:"estate_expenses" rus:"Суммарные_затраты_на_недвижимость"`
+			LandExpenses     int `json:"land_expenses" rus:"Затраты_на_землю"`
+			BuildingExpenses int `json:"building_expenses" rus:"Затраты_на_строительство"`
+		} `json:"estate" rus:"Недвижимость"`
+		Staff struct {
+			StaffExpenses    int `json:"staff_expenses" rus:"Суммарные_затраты_на_персонал"`
+			SalariesExpenses int `json:"salaries_expenses" rus:"Зарплаты"`
+			PensionExpenses  int `json:"pension_expenses" rus:"Пенсионные_отчисления"`
+			MedicalExpenses  int `json:"medical_expenses" rus:"Медицинские_отчисления"`
+		} `json:"staff" rus:"Персонал"`
+		Tax struct {
+			TaxExpenses int `json:"tax_expenses" rus:"Суммарные_затраты_на_налоги_за_год"`
+			LandTax     int `json:"land_tax" rus:"Налог_на_землю"`
+			EstateTax   int `json:"estate_tax" rus:"Налог_на_недвижимость"`
+			IncomeTax   int `json:"income_tax" rus:"Налог_на_доход"`
+		} `json:"tax" rus:"Налоги"`
+	} `json:"output" rus:"Результаты"`
+	Input struct {
+		ProjectName       *string  `json:"project_name,omitempty" rus:"Название_компании"`
+		OrganizationType  *string  `json:"organization_type,omitempty" rus:"Тип_организации"`
+		WorkersQuantity   *int     `json:"workers_quantity,omitempty" rus:"Колиество_сотрудников"`
+		Industry          *string  `json:"industry,omitempty" rus:"Отрасль_производства"`
+		County            *string  `json:"county,omitempty" rus:"Административный_округ"`
+		LandArea          *int     `json:"land_area,omitempty" rus:"Площадь_участка"`
+		BuildingArea      *int     `json:"building_area,omitempty" rus:"Площадь_строительства"`
+		MachineNames      []string `json:"machine_names,omitempty" rus:"Оборудование"`
+		MachineQuantities []int    `json:"machine_quantities,omitempty" rus:"Количество_оборудования"`
+		PatentType        *string  `json:"patent_type,omitempty" rus:"Патент"`
+		Bookkeeping       *bool    `json:"bookkeeping,omitempty" rus:"Бухгалтерия"`
+		TaxSystem         *string  `json:"tax_system,omitempty" rus:"Система_налогообложения"`
+		Operations        *int     `json:"operations,omitempty" rus:"Количество_бухгалтерских_операций"`
+		OtherNeeds        []string `json:"other_needs,omitempty" rus:"Иные_потребности"`
+	} `json:"input" rus:"Входные данные"`
 }

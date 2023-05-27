@@ -8,6 +8,7 @@ import (
 	"gb-auth-gate/pkg/thttp/server"
 	"gb-auth-gate/pkg/tutils/ptr"
 	"github.com/gofiber/fiber/v2"
+	jsoniter "github.com/json-iterator/go"
 )
 
 type CalculationsHandler struct {
@@ -101,11 +102,19 @@ func (ch *CalculationsHandler) GetResult() fiber.Handler {
 		if trackerId == "" {
 			return terrors.Raise(nil, 100019)
 		}
+
+		jsonMarshaler := jsoniter.Config{TagKey: "rus"}.Froze()
+
 		response, err := ch.CalculationsUC.GetResult(trackerId)
 		if err != nil {
 			return err
 		}
-		return ctx.JSON(response)
+		responseBytes, err := jsonMarshaler.Marshal(response)
+		if err != nil {
+			return terrors.Raise(err, 100001)
+		}
+		ctx.Set("Content-Type", "application/json")
+		return ctx.Send(responseBytes)
 	}
 }
 

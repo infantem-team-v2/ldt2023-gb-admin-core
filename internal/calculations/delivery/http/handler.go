@@ -112,7 +112,7 @@ func (ch *CalculationsHandler) GetResult() fiber.Handler {
 // GetCalculatorConstant godoc
 // @Summary Get constants for calculator's fields
 // @Description Get report by tracker id
-// @Tags Calculator
+// @Tags Calculator, UI
 // @Success 200 {object} model.GetCalculatorConstantResponse
 // @Failure 400 {object} common.Response
 // @Failure 401 {object} common.Response

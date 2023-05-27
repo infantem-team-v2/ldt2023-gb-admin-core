@@ -695,7 +695,8 @@ const docTemplate = `{
             "get": {
                 "description": "Get report by tracker id",
                 "tags": [
-                    "Calculator"
+                    "Calculator",
+                    "UI"
                 ],
                 "summary": "Get constants for calculator's fields",
                 "responses": {

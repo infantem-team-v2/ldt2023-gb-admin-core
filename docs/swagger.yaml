@@ -983,6 +983,7 @@ paths:
       summary: Get constants for calculator's fields
       tags:
       - Calculator
+      - UI
   /calc/report/:trackerId:
     get:
       description: Get report by tracker id

@@ -108,3 +108,25 @@ func (ch *CalculationsHandler) GetResult() fiber.Handler {
 		return ctx.JSON(response)
 	}
 }
+
+// GetCalculatorConstant godoc
+// @Summary Get constants for calculator's fields
+// @Description Get report by tracker id
+// @Tags Calculator
+// @Success 200 {object} model.GetCalculatorConstantResponse
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Failure 422 {object} common.Response
+// @Router /calc/fields [get]
+func (ch *CalculationsHandler) GetCalculatorConstant() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		response, err := ch.CalculationsUC.GetConstants()
+		if err != nil {
+			return err
+		}
+		return ctx.JSON(response)
+	}
+}

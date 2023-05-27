@@ -55,3 +55,12 @@ type ImprovedCalculateResponse struct {
 	BaseCalculateResponse
 	Link string `json:"link"`
 }
+
+type GetCalculatorConstantResponse struct {
+	Data struct {
+		Machines   []string `json:"machines"`
+		Industries []string `json:"industries"`
+		Needs      []string `json:"needs"`
+		Patents    []string `json:"patents"`
+	} `json:"data"`
+}

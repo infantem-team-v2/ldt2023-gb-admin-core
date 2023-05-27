@@ -105,3 +105,20 @@ func (cu *CalculationsUseCase) GetResult(trackerId string) (*model.BaseCalculate
 
 	return &response, nil
 }
+
+func (cu *CalculationsUseCase) GetConstants() (*model.GetCalculatorConstantResponse, error) {
+	var response model.GetCalculatorConstantResponse
+	_, statusCode, err := cu.sendRequestToAPI("/constant/fields",
+		thttp.GET,
+		nil,
+		&response,
+		nil)
+	if err != nil {
+		return nil, err
+	}
+	if etc.GetCodeGroup(int(statusCode)) != etc.Successful {
+		return nil, terrors.Raise(nil, 200006)
+	}
+
+	return &response, nil
+}

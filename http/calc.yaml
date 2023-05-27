@@ -9,3 +9,7 @@ ImprovedCalculate:
 GetResult:
   httpMethod: GET
   route: /report/:trackerId
+
+GetCalculatorConstant:
+  httpMethod: GET
+  route: /fields

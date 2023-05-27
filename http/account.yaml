@@ -5,3 +5,7 @@ GetCommonInfo:
 UpdateCommonInfo:
   httpMethod: PUT
   route: /info
+
+GetResultsForAccount:
+  httpMethod: GET
+  route: /results

@@ -67,36 +67,131 @@ definitions:
     type: object
   model.BaseCalculateRequest:
     properties:
-      inputs:
+      bookkeeping:
+        type: boolean
+      building_area:
+        type: integer
+      county:
+        type: string
+      industry:
+        type: string
+      land_area:
+        type: integer
+      machine_names:
         items:
-          $ref: '#/definitions/model.BasicCalculationFieldLogic'
+          type: string
         type: array
+      machine_quantities:
+        items:
+          type: integer
+        type: array
+      operations:
+        type: integer
+      organization_type:
+        type: string
+      other_needs:
+        items:
+          type: string
+        type: array
+      patent_type:
+        type: string
+      project_name:
+        type: string
+      tax_system:
+        type: string
+      workers_quantity:
+        type: integer
     type: object
   model.BaseCalculateResponse:
     properties:
-      input_data:
-        items:
-          $ref: '#/definitions/model.BasicCalculationFieldLogic'
-        type: array
-      output_data:
-        items:
-          $ref: '#/definitions/model.BasicCategoryCalculationLogic'
-        type: array
-    type: object
-  model.BasicCalculationFieldLogic:
-    properties:
-      field:
+      input:
+        properties:
+          bookkeeping:
+            type: boolean
+          building_area:
+            type: integer
+          county:
+            type: string
+          industry:
+            type: string
+          land_area:
+            type: integer
+          machine_names:
+            items:
+              type: string
+            type: array
+          machine_quantities:
+            items:
+              type: integer
+            type: array
+          operations:
+            type: integer
+          organization_type:
+            type: string
+          other_needs:
+            items:
+              type: string
+            type: array
+          patent_type:
+            type: string
+          project_name:
+            type: string
+          tax_system:
+            type: string
+          workers_quantity:
+            type: integer
+        type: object
+      output:
+        properties:
+          estate:
+            properties:
+              building_expenses:
+                type: integer
+              estate_expenses:
+                type: integer
+              land_expenses:
+                type: integer
+            type: object
+          service:
+            properties:
+              bookkeeping_expenses:
+                type: integer
+              duty_expenses:
+                type: integer
+              machine_expenses:
+                type: integer
+              patent_expenses:
+                type: integer
+              service_expenses:
+                type: integer
+            type: object
+          staff:
+            properties:
+              medical_expenses:
+                type: integer
+              pension_expenses:
+                type: integer
+              salaries_expenses:
+                type: integer
+              staff_expenses:
+                type: integer
+            type: object
+          tax:
+            properties:
+              estate_tax:
+                type: integer
+              income_tax:
+                type: integer
+              land_tax:
+                type: integer
+              tax_expenses:
+                type: integer
+            type: object
+        type: object
+      total_expenses:
+        type: integer
+      tracker_id:
         type: string
-      value: {}
-    type: object
-  model.BasicCategoryCalculationLogic:
-    properties:
-      category:
-        type: string
-      data:
-        items:
-          $ref: '#/definitions/model.BasicCalculationFieldLogic'
-        type: array
     type: object
   model.EmailValidateRequest:
     properties:
@@ -128,18 +223,100 @@ definitions:
       personal_data:
         $ref: '#/definitions/internal_account_model.PersonalDataLogic'
     type: object
+  model.GetResultsByUserResponse:
+    type: object
   model.ImprovedCalculateResponse:
     properties:
-      input_data:
-        items:
-          $ref: '#/definitions/model.BasicCalculationFieldLogic'
-        type: array
+      input:
+        properties:
+          bookkeeping:
+            type: boolean
+          building_area:
+            type: integer
+          county:
+            type: string
+          industry:
+            type: string
+          land_area:
+            type: integer
+          machine_names:
+            items:
+              type: string
+            type: array
+          machine_quantities:
+            items:
+              type: integer
+            type: array
+          operations:
+            type: integer
+          organization_type:
+            type: string
+          other_needs:
+            items:
+              type: string
+            type: array
+          patent_type:
+            type: string
+          project_name:
+            type: string
+          tax_system:
+            type: string
+          workers_quantity:
+            type: integer
+        type: object
       link:
         type: string
-      output_data:
-        items:
-          $ref: '#/definitions/model.BasicCategoryCalculationLogic'
-        type: array
+      output:
+        properties:
+          estate:
+            properties:
+              building_expenses:
+                type: integer
+              estate_expenses:
+                type: integer
+              land_expenses:
+                type: integer
+            type: object
+          service:
+            properties:
+              bookkeeping_expenses:
+                type: integer
+              duty_expenses:
+                type: integer
+              machine_expenses:
+                type: integer
+              patent_expenses:
+                type: integer
+              service_expenses:
+                type: integer
+            type: object
+          staff:
+            properties:
+              medical_expenses:
+                type: integer
+              pension_expenses:
+                type: integer
+              salaries_expenses:
+                type: integer
+              staff_expenses:
+                type: integer
+            type: object
+          tax:
+            properties:
+              estate_tax:
+                type: integer
+              income_tax:
+                type: integer
+              land_tax:
+                type: integer
+              tax_expenses:
+                type: integer
+            type: object
+        type: object
+      total_expenses:
+        type: integer
+      tracker_id:
+        type: string
     type: object
   model.PrepareResetPasswordRequest:
     properties:
@@ -354,6 +531,41 @@ paths:
           schema:
             $ref: '#/definitions/common.Response'
       summary: Update user's information
+      tags:
+      - Account
+  /account/results:
+    get:
+      description: Endpoint to get all information by user (temp w/o pagination)
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetResultsByUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Get all results for account
       tags:
       - Account
   /auth:

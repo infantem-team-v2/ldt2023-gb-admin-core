@@ -78,3 +78,27 @@ func (ah *AccountHandler) UpdateCommonInfo() fiber.Handler {
 		return ctx.JSON(response)
 	}
 }
+
+// GetResultsForAccount godoc
+// @Summary Get all results for account
+// @Description Endpoint to get all information by user (temp w/o pagination)
+// @Tags Account
+// @Success 200 {object} model.GetResultsByUserResponse
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Failure 422 {object} common.Response
+// @Router /account/results [get]
+func (ah *AccountHandler) GetResultsForAccount() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		userId := ctx.Locals(mdwModel.UserIdLocals).(int64)
+		response, statusCode, err := ah.AccountUC.GetResultsByUser(userId)
+		if err != nil {
+			return err
+		}
+
+		return ctx.Status(int(statusCode)).JSON(response)
+	}
+}

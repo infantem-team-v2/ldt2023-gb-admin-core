@@ -118,6 +118,59 @@
                 }
             }
         },
+        "/account/results": {
+            "get": {
+                "description": "Endpoint to get all information by user (temp w/o pagination)",
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Get all results for account",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetResultsByUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/auth": {
             "post": {
                 "description": "Accepts token from vendor which we process and returning pair of tokens",
@@ -783,51 +836,196 @@
         "model.BaseCalculateRequest": {
             "type": "object",
             "properties": {
-                "inputs": {
+                "bookkeeping": {
+                    "type": "boolean"
+                },
+                "building_area": {
+                    "type": "integer"
+                },
+                "county": {
+                    "type": "string"
+                },
+                "industry": {
+                    "type": "string"
+                },
+                "land_area": {
+                    "type": "integer"
+                },
+                "machine_names": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.BasicCalculationFieldLogic"
+                        "type": "string"
                     }
+                },
+                "machine_quantities": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "operations": {
+                    "type": "integer"
+                },
+                "organization_type": {
+                    "type": "string"
+                },
+                "other_needs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "patent_type": {
+                    "type": "string"
+                },
+                "project_name": {
+                    "type": "string"
+                },
+                "tax_system": {
+                    "type": "string"
+                },
+                "workers_quantity": {
+                    "type": "integer"
                 }
             }
         },
         "model.BaseCalculateResponse": {
             "type": "object",
             "properties": {
-                "input_data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.BasicCalculationFieldLogic"
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "bookkeeping": {
+                            "type": "boolean"
+                        },
+                        "building_area": {
+                            "type": "integer"
+                        },
+                        "county": {
+                            "type": "string"
+                        },
+                        "industry": {
+                            "type": "string"
+                        },
+                        "land_area": {
+                            "type": "integer"
+                        },
+                        "machine_names": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "machine_quantities": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "operations": {
+                            "type": "integer"
+                        },
+                        "organization_type": {
+                            "type": "string"
+                        },
+                        "other_needs": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "patent_type": {
+                            "type": "string"
+                        },
+                        "project_name": {
+                            "type": "string"
+                        },
+                        "tax_system": {
+                            "type": "string"
+                        },
+                        "workers_quantity": {
+                            "type": "integer"
+                        }
                     }
                 },
-                "output_data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.BasicCategoryCalculationLogic"
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "estate": {
+                            "type": "object",
+                            "properties": {
+                                "building_expenses": {
+                                    "type": "integer"
+                                },
+                                "estate_expenses": {
+                                    "type": "integer"
+                                },
+                                "land_expenses": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "service": {
+                            "type": "object",
+                            "properties": {
+                                "bookkeeping_expenses": {
+                                    "type": "integer"
+                                },
+                                "duty_expenses": {
+                                    "type": "integer"
+                                },
+                                "machine_expenses": {
+                                    "type": "integer"
+                                },
+                                "patent_expenses": {
+                                    "type": "integer"
+                                },
+                                "service_expenses": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "staff": {
+                            "type": "object",
+                            "properties": {
+                                "medical_expenses": {
+                                    "type": "integer"
+                                },
+                                "pension_expenses": {
+                                    "type": "integer"
+                                },
+                                "salaries_expenses": {
+                                    "type": "integer"
+                                },
+                                "staff_expenses": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "tax": {
+                            "type": "object",
+                            "properties": {
+                                "estate_tax": {
+                                    "type": "integer"
+                                },
+                                "income_tax": {
+                                    "type": "integer"
+                                },
+                                "land_tax": {
+                                    "type": "integer"
+                                },
+                                "tax_expenses": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
                     }
-                }
-            }
-        },
-        "model.BasicCalculationFieldLogic": {
-            "type": "object",
-            "properties": {
-                "field": {
+                },
+                "total_expenses": {
+                    "type": "integer"
+                },
+                "tracker_id": {
                     "type": "string"
-                },
-                "value": {}
-            }
-        },
-        "model.BasicCategoryCalculationLogic": {
-            "type": "object",
-            "properties": {
-                "category": {
-                    "type": "string"
-                },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.BasicCalculationFieldLogic"
-                    }
                 }
             }
         },
@@ -878,23 +1076,149 @@
                 }
             }
         },
+        "model.GetResultsByUserResponse": {
+            "type": "object"
+        },
         "model.ImprovedCalculateResponse": {
             "type": "object",
             "properties": {
-                "input_data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.BasicCalculationFieldLogic"
+                "input": {
+                    "type": "object",
+                    "properties": {
+                        "bookkeeping": {
+                            "type": "boolean"
+                        },
+                        "building_area": {
+                            "type": "integer"
+                        },
+                        "county": {
+                            "type": "string"
+                        },
+                        "industry": {
+                            "type": "string"
+                        },
+                        "land_area": {
+                            "type": "integer"
+                        },
+                        "machine_names": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "machine_quantities": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "operations": {
+                            "type": "integer"
+                        },
+                        "organization_type": {
+                            "type": "string"
+                        },
+                        "other_needs": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "patent_type": {
+                            "type": "string"
+                        },
+                        "project_name": {
+                            "type": "string"
+                        },
+                        "tax_system": {
+                            "type": "string"
+                        },
+                        "workers_quantity": {
+                            "type": "integer"
+                        }
                     }
                 },
                 "link": {
                     "type": "string"
                 },
-                "output_data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.BasicCategoryCalculationLogic"
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "estate": {
+                            "type": "object",
+                            "properties": {
+                                "building_expenses": {
+                                    "type": "integer"
+                                },
+                                "estate_expenses": {
+                                    "type": "integer"
+                                },
+                                "land_expenses": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "service": {
+                            "type": "object",
+                            "properties": {
+                                "bookkeeping_expenses": {
+                                    "type": "integer"
+                                },
+                                "duty_expenses": {
+                                    "type": "integer"
+                                },
+                                "machine_expenses": {
+                                    "type": "integer"
+                                },
+                                "patent_expenses": {
+                                    "type": "integer"
+                                },
+                                "service_expenses": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "staff": {
+                            "type": "object",
+                            "properties": {
+                                "medical_expenses": {
+                                    "type": "integer"
+                                },
+                                "pension_expenses": {
+                                    "type": "integer"
+                                },
+                                "salaries_expenses": {
+                                    "type": "integer"
+                                },
+                                "staff_expenses": {
+                                    "type": "integer"
+                                }
+                            }
+                        },
+                        "tax": {
+                            "type": "object",
+                            "properties": {
+                                "estate_tax": {
+                                    "type": "integer"
+                                },
+                                "income_tax": {
+                                    "type": "integer"
+                                },
+                                "land_tax": {
+                                    "type": "integer"
+                                },
+                                "tax_expenses": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
                     }
+                },
+                "total_expenses": {
+                    "type": "integer"
+                },
+                "tracker_id": {
+                    "type": "string"
                 }
             }
         },

@@ -19,8 +19,8 @@ type GetCalculatorConstantResponse struct {
 }
 
 type BaseCalculateResponse struct {
-	TrackerID     string `json:"tracker_id" rus:"Идентификатор_отчёта"`
-	TotalExpenses int    `json:"total_expenses" rus:"Суммарные_затраты"`
+	TrackerID     string `json:"tracker_id" rus:"tracker_id"`
+	TotalExpenses int    `json:"total_expenses" rus:"total_expenses"`
 	Output        struct {
 		Service struct {
 			ServiceExpenses     int `json:"service_expenses" rus:"Суммарные_затраты_на_услуги"`
@@ -46,7 +46,7 @@ type BaseCalculateResponse struct {
 			EstateTax   int `json:"estate_tax" rus:"Налог_на_недвижимость"`
 			IncomeTax   int `json:"income_tax" rus:"Налог_на_доход"`
 		} `json:"tax" rus:"Налоги"`
-	} `json:"output" rus:"Результаты"`
+	} `json:"output" rus:"output"`
 	Input struct {
 		ProjectName       *string  `json:"project_name,omitempty" rus:"Название_компании"`
 		OrganizationType  *string  `json:"organization_type,omitempty" rus:"Тип_организации"`
@@ -62,5 +62,5 @@ type BaseCalculateResponse struct {
 		TaxSystem         *string  `json:"tax_system,omitempty" rus:"Система_налогообложения"`
 		Operations        *int     `json:"operations,omitempty" rus:"Количество_бухгалтерских_операций"`
 		OtherNeeds        []string `json:"other_needs,omitempty" rus:"Иные_потребности"`
-	} `json:"input" rus:"Входные данные"`
+	} `json:"input" rus:"input"`
 }

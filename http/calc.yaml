@@ -5,3 +5,7 @@ BaseCalculate:
 ImprovedCalculate:
   httpMethod: POST
   route: /
+
+GetResult:
+  httpMethod: GET
+  route: /report/:trackerId

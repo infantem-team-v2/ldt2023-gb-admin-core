@@ -61,6 +61,9 @@
 100018:
   message: can't get user
   statusCode: 409
+100019:
+  message: there's no report's id
+  statusCode: 404
 # 2xxxxx our vendor problem
 200000:
   message: unknown error on external api's side

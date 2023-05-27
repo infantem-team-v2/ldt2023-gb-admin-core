@@ -82,3 +82,29 @@ func (ch *CalculationsHandler) ImprovedCalculate() fiber.Handler {
 		return ctx.JSON(response)
 	}
 }
+
+// GetResult godoc
+// @Summary Get result by tracker id
+// @Description Get report by tracker id
+// @Tags Calculator
+// @Success 200 {object} model.BaseCalculateRequest
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Failure 422 {object} common.Response
+// @Router /calc/report/:trackerId [get]
+func (ch *CalculationsHandler) GetResult() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		trackerId := ctx.Params("trackerId", "")
+		if trackerId == "" {
+			return terrors.Raise(nil, 100019)
+		}
+		response, err := ch.CalculationsUC.GetResult(trackerId)
+		if err != nil {
+			return err
+		}
+		return ctx.JSON(response)
+	}
+}

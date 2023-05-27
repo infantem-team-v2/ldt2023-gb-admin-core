@@ -86,3 +86,22 @@ func (cu *CalculationsUseCase) ImprovedCalculate(params *model.BaseCalculateRequ
 		Link:                  "https://cdn.ldt2023.infantem.tech/trahni_psa.pdf",
 	}, nil
 }
+
+func (cu *CalculationsUseCase) GetResult(trackerId string) (*model.BaseCalculateResponse, error) {
+	var response model.BaseCalculateResponse
+	_, statusCode, err := cu.sendRequestToAPI("/calc/info",
+		thttp.GET,
+		nil,
+		&response,
+		map[string]interface{}{
+			"tracker_id": trackerId,
+		})
+	if err != nil {
+		return nil, err
+	}
+	if etc.GetCodeGroup(int(statusCode)) != etc.Successful {
+		return nil, terrors.Raise(nil, 200006)
+	}
+
+	return &response, nil
+}

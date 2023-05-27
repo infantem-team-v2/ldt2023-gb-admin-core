@@ -76,7 +76,8 @@ definitions:
       industry:
         type: string
       land_area:
-        type: integer
+        example: "0"
+        type: string
       machine_names:
         items:
           type: string

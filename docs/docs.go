@@ -961,7 +961,8 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "land_area": {
-                    "type": "integer"
+                    "type": "string",
+                    "example": "0"
                 },
                 "machine_names": {
                     "type": "array",

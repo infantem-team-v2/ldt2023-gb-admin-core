@@ -1,7 +1,7 @@
 package tsecure
 
 import (
-	"gb-auth-gate/config"
+	"gb-admin-core/config"
 	"github.com/fernet/fernet-go"
 	"github.com/sarulabs/di"
 	"time"

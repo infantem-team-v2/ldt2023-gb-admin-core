@@ -65,133 +65,20 @@ definitions:
     required:
     - full_name
     type: object
-  model.BaseCalculateRequest:
+  model.ChangeConstantUnitLogic:
     properties:
-      bookkeeping:
-        type: boolean
-      building_area:
-        type: integer
-      county:
+      category:
         type: string
-      industry:
+      name:
         type: string
-      land_area:
-        type: integer
-      machine_names:
-        items:
-          type: string
-        type: array
-      machine_quantities:
-        items:
-          type: integer
-        type: array
-      operations:
-        type: integer
-      organization_type:
-        type: string
-      other_needs:
-        items:
-          type: string
-        type: array
-      patent_type:
-        type: string
-      project_name:
-        type: string
-      tax_system:
-        type: string
-      workers_quantity:
-        type: integer
+      value: {}
     type: object
-  model.BaseCalculateResponse:
+  model.ChangeConstantsRequest:
     properties:
-      input:
-        properties:
-          bookkeeping:
-            type: boolean
-          building_area:
-            type: integer
-          county:
-            type: string
-          industry:
-            type: string
-          land_area:
-            type: integer
-          machine_names:
-            items:
-              type: string
-            type: array
-          machine_quantities:
-            items:
-              type: integer
-            type: array
-          operations:
-            type: integer
-          organization_type:
-            type: string
-          other_needs:
-            items:
-              type: string
-            type: array
-          patent_type:
-            type: string
-          project_name:
-            type: string
-          tax_system:
-            type: string
-          workers_quantity:
-            type: integer
-        type: object
-      output:
-        properties:
-          estate:
-            properties:
-              building_expenses:
-                type: integer
-              estate_expenses:
-                type: integer
-              land_expenses:
-                type: integer
-            type: object
-          service:
-            properties:
-              bookkeeping_expenses:
-                type: integer
-              duty_expenses:
-                type: integer
-              machine_expenses:
-                type: integer
-              patent_expenses:
-                type: integer
-              service_expenses:
-                type: integer
-            type: object
-          staff:
-            properties:
-              medical_expenses:
-                type: integer
-              pension_expenses:
-                type: integer
-              salaries_expenses:
-                type: integer
-              staff_expenses:
-                type: integer
-            type: object
-          tax:
-            properties:
-              estate_tax:
-                type: integer
-              income_tax:
-                type: integer
-              land_tax:
-                type: integer
-              tax_expenses:
-                type: integer
-            type: object
-        type: object
-      total_expenses:
-        type: integer
-      tracker_id:
-        type: string
+      elements:
+        items:
+          $ref: '#/definitions/model.ChangeConstantUnitLogic'
+        type: array
     type: object
   model.EmailValidateRequest:
     properties:
@@ -216,28 +103,6 @@ definitions:
           $ref: '#/definitions/model.UiCategoryLogic'
         type: array
     type: object
-  model.GetCalculatorConstantResponse:
-    properties:
-      data:
-        properties:
-          industries:
-            items:
-              type: string
-            type: array
-          machines:
-            items:
-              type: string
-            type: array
-          needs:
-            items:
-              type: string
-            type: array
-          patents:
-            items:
-              type: string
-            type: array
-        type: object
-    type: object
   model.GetCommonInfoResponse:
     properties:
       business_data:
@@ -245,50 +110,63 @@ definitions:
       personal_data:
         $ref: '#/definitions/internal_account_model.PersonalDataLogic'
     type: object
-  model.GetInsightsResponse:
+  model.GetConstantsResponse:
     properties:
-      best_tax_system_insight:
-        properties:
-          insight:
-            type: string
-        type: object
-      usual_county_insight:
-        properties:
-          insight:
-            type: string
-        type: object
-      usual_expenses_insight:
-        properties:
-          insight:
-            type: string
-        type: object
-      workers_quantity_insight:
-        properties:
-          insight:
-            type: string
-        type: object
-    type: object
-  model.GetPlotsResponse:
-    properties:
-      expenses_distribution:
-        $ref: '#/definitions/model.PieChartLogic'
-      popularity_chart:
-        properties:
-          datasets:
-            items:
-              additionalProperties:
-                items:
-                  type: integer
-                type: array
-              type: object
-            type: array
-          labels:
-            items:
+      county_prices:
+        items:
+          properties:
+            county_id:
+              type: integer
+            county_name:
               type: string
-            type: array
-        type: object
-      taxes_distribution:
-        $ref: '#/definitions/model.PieChartLogic'
+            county_price:
+              type: number
+          type: object
+        type: array
+      machine_prices:
+        items:
+          properties:
+            machine_id:
+              type: integer
+            machine_name:
+              type: string
+            machine_price:
+              type: integer
+          type: object
+        type: array
+      mean_salaries:
+        items:
+          properties:
+            industry_id:
+              type: integer
+            industry_name:
+              type: string
+            salary:
+              type: integer
+          type: object
+        type: array
+      other_needs:
+        items:
+          properties:
+            need_coeff:
+              type: number
+            need_id:
+              type: integer
+            need_name:
+              type: string
+          type: object
+        type: array
+      patent_prices:
+        items:
+          properties:
+            patent_id:
+              type: integer
+            patent_name:
+              type: string
+            patent_price:
+              type: integer
+          type: object
+        type: array
     type: object
   model.GetResultsByUserResponse:
     properties:
@@ -304,112 +182,6 @@ definitions:
             time_stamp:
               type: string
           type: object
-        type: array
-    type: object
-  model.ImprovedCalculateResponse:
-    properties:
-      input:
-        properties:
-          bookkeeping:
-            type: boolean
-          building_area:
-            type: integer
-          county:
-            type: string
-          industry:
-            type: string
-          land_area:
-            type: integer
-          machine_names:
-            items:
-              type: string
-            type: array
-          machine_quantities:
-            items:
-              type: integer
-            type: array
-          operations:
-            type: integer
-          organization_type:
-            type: string
-          other_needs:
-            items:
-              type: string
-            type: array
-          patent_type:
-            type: string
-          project_name:
-            type: string
-          tax_system:
-            type: string
-          workers_quantity:
-            type: integer
-        type: object
-      link:
-        type: string
-      output:
-        properties:
-          estate:
-            properties:
-              building_expenses:
-                type: integer
-              estate_expenses:
-                type: integer
-              land_expenses:
-                type: integer
-            type: object
-          service:
-            properties:
-              bookkeeping_expenses:
-                type: integer
-              duty_expenses:
-                type: integer
-              machine_expenses:
-                type: integer
-              patent_expenses:
-                type: integer
-              service_expenses:
-                type: integer
-            type: object
-          staff:
-            properties:
-              medical_expenses:
-                type: integer
-              pension_expenses:
-                type: integer
-              salaries_expenses:
-                type: integer
-              staff_expenses:
-                type: integer
-            type: object
-          tax:
-            properties:
-              estate_tax:
-                type: integer
-              income_tax:
-                type: integer
-              land_tax:
-                type: integer
-              tax_expenses:
-                type: integer
-            type: object
-        type: object
-      total_expenses:
-        type: integer
-      tracker_id:
-        type: string
-    type: object
-  model.PieChartLogic:
-    properties:
-      datasets:
-        items:
-          additionalProperties:
-            type: integer
-          type: object
-        type: array
-      labels:
-        items:
-          type: string
         type: array
     type: object
   model.PrepareResetPasswordRequest:
@@ -460,6 +232,13 @@ definitions:
         type: string
       internal_code:
         type: integer
+    type: object
+  model.SetActiveForElementRequest:
+    properties:
+      elements:
+        items:
+          $ref: '#/definitions/model.UiChangeElementLogic'
+        type: array
     type: object
   model.SignInRequest:
     properties:
@@ -514,6 +293,13 @@ definitions:
           $ref: '#/definitions/model.UiElementLogic'
         type: array
     type: object
+  model.UiChangeElementLogic:
+    properties:
+      active:
+        type: boolean
+      field_id:
+        type: string
+    type: object
   model.UiElementLogic:
     properties:
       comment:
@@ -559,6 +345,79 @@ info:
   title: Core backend app for Leaders of Digital Transformation
   version: 1.0.0
 paths:
+  /account/constant:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetConstantsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Get all constants for formula
+      tags:
+      - Account
+      - Admin
+    patch:
+      description: Endpoint to change constants
+      parameters:
+      - description: Change constants body
+        in: body
+        name: updated_data
+        required: true
+        schema:
+          $ref: '#/definitions/model.ChangeConstantsRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Change constants for formula
+      tags:
+      - Account
+      - Admin
   /account/info:
     get:
       description: Endpoint to get information about user
@@ -954,201 +813,6 @@ paths:
       tags:
       - Authorization
       - Login
-  /calc:
-    post:
-      consumes:
-      - application/json
-      description: Calculations with authorization
-      parameters:
-      - description: Basic parameters for base calculator w/o auth
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/model.BaseCalculateRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.ImprovedCalculateResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/common.Response'
-      summary: Improved calculation w/ auth
-      tags:
-      - Calculator
-  /calc/base:
-    post:
-      consumes:
-      - application/json
-      description: Base calculation without authorization for landing page
-      parameters:
-      - description: Basic parameters for base calculator w/o auth
-        in: body
-        name: data
-        required: true
-        schema:
-          $ref: '#/definitions/model.BaseCalculateRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.BaseCalculateResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/common.Response'
-      summary: Base calculation
-      tags:
-      - Calculator
-  /calc/fields:
-    get:
-      description: Get constants for calculator's fields
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.GetCalculatorConstantResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/common.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/common.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/common.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/common.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/common.Response'
-        "422":
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/common.Response'
-      summary: Get constants for calculator's fields
-      tags:
-      - Calculator
-      - UI
-  /calc/insights/:trackerId:
-    get:
-      description: Get report by tracker id
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.GetInsightsResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/common.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/common.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/common.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/common.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/common.Response'
-        "422":
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/common.Response'
-      summary: Get insights for report
-      tags:
-      - Calculator
-      - Analytics
-  /calc/plots/:trackerId:
-    get:
-      description: Get report by tracker id
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.GetPlotsResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/common.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/common.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/common.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/common.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/common.Response'
-        "422":
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/common.Response'
-      summary: Get plots for report
-      tags:
-      - Calculator
-      - Analytics
-  /calc/report/:trackerId:
-    get:
-      description: Get report by tracker id
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.BaseCalculateRequest'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/common.Response'
-        "401":
-          description: Unauthorized
-          schema:
-            $ref: '#/definitions/common.Response'
-        "403":
-          description: Forbidden
-          schema:
-            $ref: '#/definitions/common.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/common.Response'
-        "409":
-          description: Conflict
-          schema:
-            $ref: '#/definitions/common.Response'
-        "422":
-          description: Unprocessable Entity
-          schema:
-            $ref: '#/definitions/common.Response'
-      summary: Get result by tracker id
-      tags:
-      - Calculator
   /ui/calc/element/active:
     get:
       description: Get specification for ui elements to visualise it on frontend
@@ -1180,6 +844,44 @@ paths:
       summary: Get UI elements for calculator
       tags:
       - UI
+    patch:
+      description: Set state of activity for element
+      parameters:
+      - description: Fields and their states
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.SetActiveForElementRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetCalcActiveElementsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Set active/inactive state for element
+      tags:
+      - UI
+      - Admin
 schemes:
 - https
 swagger: "2.0"

@@ -13,3 +13,9 @@ type BusinessDataLogic struct {
 	EconomicActivity string `json:"economic_activity"`
 	Website          string `json:"website"`
 }
+
+type ChangeConstantUnitLogic struct {
+	Name     string      `json:"name"`
+	Value    interface{} `json:"value"`
+	Category string      `json:"category"`
+}

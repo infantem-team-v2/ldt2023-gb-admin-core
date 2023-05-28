@@ -19,3 +19,8 @@ type UiCategoryLogic struct {
 	CategoryId string            `json:"category_id"`
 	Elements   []*UiElementLogic `json:"elements"`
 }
+
+type UiChangeElementLogic struct {
+	FieldId string `json:"field_id"`
+	Active  bool   `json:"active"`
+}

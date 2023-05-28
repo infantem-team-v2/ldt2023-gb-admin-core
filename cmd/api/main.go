@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"gb-auth-gate/internal/pkg/server"
+	"gb-admin-core/internal/pkg/server"
 )
 
 // @title Core backend app for Leaders of Digital Transformation

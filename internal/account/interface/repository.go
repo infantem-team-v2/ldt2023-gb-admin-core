@@ -2,7 +2,7 @@ package accountInterface
 
 import (
 	"context"
-	"gb-auth-gate/internal/account/model"
+	"gb-admin-core/internal/account/model"
 )
 
 type RelationalRepository interface {

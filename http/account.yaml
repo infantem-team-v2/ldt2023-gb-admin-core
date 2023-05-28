@@ -9,3 +9,11 @@ UpdateCommonInfo:
 GetResultsForAccount:
   httpMethod: GET
   route: /results
+
+ChangeConstants:
+  httpMethod: PATCH
+  route: /constant
+
+GetConstants:
+  httpMethod: GET
+  route: /constant

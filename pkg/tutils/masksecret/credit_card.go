@@ -1,6 +1,6 @@
 package masksecret
 
-import "gb-auth-gate/pkg/tutils/valid"
+import "gb-admin-core/pkg/tutils/valid"
 
 func CreditCard(s string) (string, error) {
 	if err := valid.CreditCard(s); err != nil {

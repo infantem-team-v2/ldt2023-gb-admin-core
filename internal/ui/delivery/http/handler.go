@@ -1,8 +1,10 @@
 package http
 
 import (
-	uiInterface "gb-auth-gate/internal/ui/interface"
-	"gb-auth-gate/pkg/thttp/server"
+	uiInterface "gb-admin-core/internal/ui/interface"
+	"gb-admin-core/internal/ui/model"
+	"gb-admin-core/pkg/terrors"
+	"gb-admin-core/pkg/thttp/server"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -45,5 +47,32 @@ func (uh *UiHandler) GetCalcActiveElements() fiber.Handler {
 			return err
 		}
 		return ctx.Status(int(statusCode)).JSON(response)
+	}
+}
+
+// SetActiveForElement godoc
+// @Summary Set active/inactive state for element
+// @Description Set state of activity for element
+// @Tags UI, Admin
+// @Param data body model.SetActiveForElementRequest true "Fields and their states"
+// @Success 200 {object} model.GetCalcActiveElementsResponse
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 422 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Router /ui/calc/element/active [patch]
+func (uh *UiHandler) SetActiveForElement() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		var params model.SetActiveForElementRequest
+		if err := server.ReadRequest(ctx, &params); err != nil {
+			return terrors.Raise(err, 100001)
+		}
+		response, statusCode, err := uh.UiUC.SetActiveForElements(&params)
+		if err != nil {
+			return err
+		}
+		return ctx.Status(int(statusCode)).JSON(response)
+
 	}
 }

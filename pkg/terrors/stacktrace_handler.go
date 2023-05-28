@@ -1,7 +1,7 @@
 package terrors
 
 import (
-	"gb-auth-gate/pkg/tlogger"
+	"gb-admin-core/pkg/tlogger"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sarulabs/di"
 )

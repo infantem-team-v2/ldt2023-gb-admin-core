@@ -2,8 +2,8 @@ package tlogger
 
 import (
 	"fmt"
-	"gb-auth-gate/config"
-	"gb-auth-gate/pkg/terrors/interface"
+	"gb-admin-core/config"
+	"gb-admin-core/pkg/terrors/interface"
 	"github.com/afiskon/promtail-client/promtail"
 	"github.com/sarulabs/di"
 	"github.com/sirupsen/logrus"

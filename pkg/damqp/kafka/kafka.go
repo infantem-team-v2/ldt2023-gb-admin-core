@@ -3,8 +3,8 @@ package kafka
 import (
 	"context"
 	"fmt"
-	"gb-auth-gate/config"
-	"gb-auth-gate/pkg/tlogger"
+	"gb-admin-core/config"
+	"gb-admin-core/pkg/tlogger"
 	"github.com/Shopify/sarama"
 	"github.com/sarulabs/di"
 )

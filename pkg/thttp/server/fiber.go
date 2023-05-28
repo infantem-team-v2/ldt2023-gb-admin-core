@@ -1,8 +1,8 @@
 package server
 
 import (
-	"gb-auth-gate/config"
-	"gb-auth-gate/pkg/terrors"
+	"gb-admin-core/config"
+	"gb-admin-core/pkg/terrors"
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/sarulabs/di"

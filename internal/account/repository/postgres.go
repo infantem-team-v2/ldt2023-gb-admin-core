@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"gb-auth-gate/internal/account/model"
-	"gb-auth-gate/pkg/terrors"
+	"gb-admin-core/internal/account/model"
+	"gb-admin-core/pkg/terrors"
 	"github.com/jmoiron/sqlx"
 	"github.com/sarulabs/di"
 )

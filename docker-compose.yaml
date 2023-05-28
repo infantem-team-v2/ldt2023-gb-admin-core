@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   api:
-    container_name: gb-auth-api
+    container_name: gb-admin-api
 
     build:
       context: .
@@ -21,7 +21,7 @@ services:
       - redis
 
   postgres:
-    container_name: gb-auth-postgres
+    container_name: gb-admin-postgres
 
     build:
       context: .
@@ -42,7 +42,7 @@ services:
       - ${POSTGRES_DATA_VOLUME}:/var/lib/postgresql/data/pgdata
 
   redis:
-    container_name: gb-auth-redis
+    container_name: gb-admin-redis
 
     image: redis:latest
 

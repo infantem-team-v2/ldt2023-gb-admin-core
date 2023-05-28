@@ -1,11 +1,11 @@
 package http
 
 import (
-	accountInterface "gb-auth-gate/internal/account/interface"
-	"gb-auth-gate/internal/account/model"
-	mdwModel "gb-auth-gate/internal/pkg/middleware/model"
-	"gb-auth-gate/pkg/terrors"
-	"gb-auth-gate/pkg/thttp/server"
+	accountInterface "gb-admin-core/internal/account/interface"
+	"gb-admin-core/internal/account/model"
+	mdwModel "gb-admin-core/internal/pkg/middleware/model"
+	"gb-admin-core/pkg/terrors"
+	"gb-admin-core/pkg/thttp/server"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -95,6 +95,56 @@ func (ah *AccountHandler) GetResultsForAccount() fiber.Handler {
 	return func(ctx *fiber.Ctx) error {
 		userId := ctx.Locals(mdwModel.UserIdLocals).(int64)
 		response, statusCode, err := ah.AccountUC.GetResultsByUser(userId)
+		if err != nil {
+			return err
+		}
+
+		return ctx.Status(int(statusCode)).JSON(response)
+	}
+}
+
+// ChangeConstants godoc
+// @Summary Change constants for formula
+// @Description Endpoint to change constants
+// @Tags Account, Admin
+// @Param updated_data body model.ChangeConstantsRequest true "Change constants body"
+// @Success 200 {object} common.Response
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Router /account/constant [patch]
+func (ah *AccountHandler) ChangeConstants() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		var params model.ChangeConstantsRequest
+		if err := server.ReadRequest(ctx, &params); err != nil {
+			return terrors.Raise(err, 100001)
+		}
+		response, statusCode, err := ah.AccountUC.UpdateConstants(&params)
+		if err != nil {
+			return err
+		}
+		return ctx.Status(int(statusCode)).JSON(response)
+	}
+}
+
+// GetConstants godoc
+// @Summary Get all constants for formula
+// @Description
+// @Tags Account, Admin
+// @Success 200 {object} model.GetConstantsResponse
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Failure 422 {object} common.Response
+// @Router /account/constant [get]
+func (ah *AccountHandler) GetConstants() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		response, statusCode, err := ah.AccountUC.GetConstants()
+
 		if err != nil {
 			return err
 		}

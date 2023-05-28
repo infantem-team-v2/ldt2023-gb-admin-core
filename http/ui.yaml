@@ -1,3 +1,6 @@
 GetCalcActiveElements:
   httpMethod: GET
   route: /calc/element/active
+SetActiveForElement:
+  httpMethod: PATCH
+  route: /calc/element/active

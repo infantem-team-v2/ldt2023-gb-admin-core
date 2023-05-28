@@ -3,8 +3,8 @@ package rabbit
 import (
 	"context"
 	"fmt"
-	"gb-auth-gate/config"
-	"gb-auth-gate/pkg/tlogger"
+	"gb-admin-core/config"
+	"gb-admin-core/pkg/tlogger"
 	amqp "github.com/rabbitmq/amqp091-go"
 	"github.com/sarulabs/di"
 	"os"

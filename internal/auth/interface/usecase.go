@@ -1,6 +1,6 @@
 package authInterface
 
-import "gb-auth-gate/internal/auth/model"
+import "gb-admin-core/internal/auth/model"
 
 type UseCase interface {
 	SignUp(params *model.SignUpRequest) (*model.SignUpResponse, error)

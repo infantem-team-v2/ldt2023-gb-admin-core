@@ -4,13 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	accountInterface "gb-auth-gate/internal/account/interface"
-	"gb-auth-gate/internal/account/model"
-	authInterface "gb-auth-gate/internal/auth/interface"
-	"gb-auth-gate/internal/pkg/common"
-	"gb-auth-gate/pkg/terrors"
-	"gb-auth-gate/pkg/thttp"
-	thttpHeaders "gb-auth-gate/pkg/thttp/headers"
+	accountInterface "gb-admin-core/internal/account/interface"
+	"gb-admin-core/internal/account/model"
+	authInterface "gb-admin-core/internal/auth/interface"
+	"gb-admin-core/internal/pkg/common"
+	"gb-admin-core/pkg/terrors"
+	"gb-admin-core/pkg/thttp"
+	thttpHeaders "gb-admin-core/pkg/thttp/headers"
 	"github.com/sarulabs/di"
 	"strings"
 )
@@ -104,6 +104,68 @@ func (auc *AccountUseCase) GetResultsByUser(userId int64) (interface{}, uint16, 
 		map[string]interface{}{
 			"user_id": userId,
 		},
+	)
+	if err != nil {
+		return nil, 0, terrors.Raise(err, 200005)
+	}
+	if statusCode != 200 {
+		var commonResponse common.Response
+		if err := json.Unmarshal(rawResponse, &commonResponse); err != nil {
+			return nil, 0, terrors.Raise(err, 200005)
+		}
+		return commonResponse, statusCode, nil
+	}
+	return response, statusCode, nil
+}
+
+func (auc *AccountUseCase) UpdateConstants(params *model.ChangeConstantsRequest) (interface{}, uint16, error) {
+	service, err := auc.authUC.GetAuthServiceByName(model.PdsCalcService)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response common.Response
+
+	headers, err := thttpHeaders.MakeAuthHeaders(params, service.PublicKey, service.PrivateKey, "GET")
+	fmt.Printf("\n%+v\n", headers)
+	rawResponse, statusCode, err := auc.httpClient.Request(
+		thttp.PATCH,
+		fmt.Sprintf("%s/constant/update", service.URL),
+		headers,
+		params,
+		&response,
+		nil,
+	)
+	if err != nil {
+		return nil, 0, terrors.Raise(err, 200005)
+	}
+	if statusCode != 200 {
+		var commonResponse common.Response
+		if err := json.Unmarshal(rawResponse, &commonResponse); err != nil {
+			return nil, 0, terrors.Raise(err, 200005)
+		}
+		return commonResponse, statusCode, nil
+	}
+	return response, statusCode, nil
+}
+
+func (auc *AccountUseCase) GetConstants() (interface{}, uint16, error) {
+	service, err := auc.authUC.GetAuthServiceByName(model.PdsCalcService)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response model.GetConstantsResponse
+
+	headers, err := thttpHeaders.MakeAuthHeaders("", service.PublicKey, service.PrivateKey, "GET")
+	fmt.Printf("\n%+v\n", headers)
+	rawResponse, statusCode, err := auc.httpClient.Request(
+		thttp.PATCH,
+		fmt.Sprintf("%s/constant", service.URL),
+		headers,
+		nil,
+		&response,
+		nil,
 	)
 	if err != nil {
 		return nil, 0, terrors.Raise(err, 200005)

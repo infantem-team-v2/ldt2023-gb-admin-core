@@ -2,7 +2,7 @@ package thttpHeaders
 
 import (
 	"encoding/json"
-	"gb-auth-gate/pkg/tsecure"
+	"gb-admin-core/pkg/tsecure"
 	"strconv"
 	"strings"
 	"time"
@@ -22,7 +22,7 @@ func MakeAuthHeaders(body interface{}, publicKey, privateKey string, method stri
 	if mErr != nil {
 		return nil, mErr
 	}
-	
+
 	signature := tsecure.CalcSignature(privateKey, string(bodyBytes), tsecure.SHA512)
 
 	headers[ContentTypeKey] = TypeApplicationJSON.String()

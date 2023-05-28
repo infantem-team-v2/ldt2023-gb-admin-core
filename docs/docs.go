@@ -20,6 +20,116 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/account/constant": {
+            "get": {
+                "tags": [
+                    "Account",
+                    "Admin"
+                ],
+                "summary": "Get all constants for formula",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetConstantsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Endpoint to change constants",
+                "tags": [
+                    "Account",
+                    "Admin"
+                ],
+                "summary": "Change constants for formula",
+                "parameters": [
+                    {
+                        "description": "Change constants body",
+                        "name": "updated_data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.ChangeConstantsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/account/info": {
             "get": {
                 "description": "Endpoint to get information about user",
@@ -611,301 +721,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/calc": {
-            "post": {
-                "description": "Calculations with authorization",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Calculator"
-                ],
-                "summary": "Improved calculation w/ auth",
-                "parameters": [
-                    {
-                        "description": "Basic parameters for base calculator w/o auth",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.BaseCalculateRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.ImprovedCalculateResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/calc/base": {
-            "post": {
-                "description": "Base calculation without authorization for landing page",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Calculator"
-                ],
-                "summary": "Base calculation",
-                "parameters": [
-                    {
-                        "description": "Basic parameters for base calculator w/o auth",
-                        "name": "data",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/model.BaseCalculateRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.BaseCalculateResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/calc/fields": {
-            "get": {
-                "description": "Get constants for calculator's fields",
-                "tags": [
-                    "Calculator",
-                    "UI"
-                ],
-                "summary": "Get constants for calculator's fields",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.GetCalculatorConstantResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/calc/insights/:trackerId": {
-            "get": {
-                "description": "Get report by tracker id",
-                "tags": [
-                    "Calculator",
-                    "Analytics"
-                ],
-                "summary": "Get insights for report",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.GetInsightsResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/calc/plots/:trackerId": {
-            "get": {
-                "description": "Get report by tracker id",
-                "tags": [
-                    "Calculator",
-                    "Analytics"
-                ],
-                "summary": "Get plots for report",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.GetPlotsResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    }
-                }
-            }
-        },
-        "/calc/report/:trackerId": {
-            "get": {
-                "description": "Get report by tracker id",
-                "tags": [
-                    "Calculator"
-                ],
-                "summary": "Get result by tracker id",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.BaseCalculateRequest"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "403": {
-                        "description": "Forbidden",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "schema": {
-                            "$ref": "#/definitions/common.Response"
-                        }
-                    }
-                }
-            }
-        },
         "/ui/calc/element/active": {
             "get": {
                 "description": "Get specification for ui elements to visualise it on frontend",
@@ -913,6 +728,63 @@ const docTemplate = `{
                     "UI"
                 ],
                 "summary": "Get UI elements for calculator",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetCalcActiveElementsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Set state of activity for element",
+                "tags": [
+                    "UI",
+                    "Admin"
+                ],
+                "summary": "Set active/inactive state for element",
+                "parameters": [
+                    {
+                        "description": "Fields and their states",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.SetActiveForElementRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1053,199 +925,26 @@ const docTemplate = `{
                 }
             }
         },
-        "model.BaseCalculateRequest": {
+        "model.ChangeConstantUnitLogic": {
             "type": "object",
             "properties": {
-                "bookkeeping": {
-                    "type": "boolean"
-                },
-                "building_area": {
-                    "type": "integer"
-                },
-                "county": {
+                "category": {
                     "type": "string"
                 },
-                "industry": {
+                "name": {
                     "type": "string"
                 },
-                "land_area": {
-                    "type": "integer"
-                },
-                "machine_names": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "machine_quantities": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                },
-                "operations": {
-                    "type": "integer"
-                },
-                "organization_type": {
-                    "type": "string"
-                },
-                "other_needs": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "patent_type": {
-                    "type": "string"
-                },
-                "project_name": {
-                    "type": "string"
-                },
-                "tax_system": {
-                    "type": "string"
-                },
-                "workers_quantity": {
-                    "type": "integer"
-                }
+                "value": {}
             }
         },
-        "model.BaseCalculateResponse": {
+        "model.ChangeConstantsRequest": {
             "type": "object",
             "properties": {
-                "input": {
-                    "type": "object",
-                    "properties": {
-                        "bookkeeping": {
-                            "type": "boolean"
-                        },
-                        "building_area": {
-                            "type": "integer"
-                        },
-                        "county": {
-                            "type": "string"
-                        },
-                        "industry": {
-                            "type": "string"
-                        },
-                        "land_area": {
-                            "type": "integer"
-                        },
-                        "machine_names": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "machine_quantities": {
-                            "type": "array",
-                            "items": {
-                                "type": "integer"
-                            }
-                        },
-                        "operations": {
-                            "type": "integer"
-                        },
-                        "organization_type": {
-                            "type": "string"
-                        },
-                        "other_needs": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "patent_type": {
-                            "type": "string"
-                        },
-                        "project_name": {
-                            "type": "string"
-                        },
-                        "tax_system": {
-                            "type": "string"
-                        },
-                        "workers_quantity": {
-                            "type": "integer"
-                        }
+                "elements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.ChangeConstantUnitLogic"
                     }
-                },
-                "output": {
-                    "type": "object",
-                    "properties": {
-                        "estate": {
-                            "type": "object",
-                            "properties": {
-                                "building_expenses": {
-                                    "type": "integer"
-                                },
-                                "estate_expenses": {
-                                    "type": "integer"
-                                },
-                                "land_expenses": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "service": {
-                            "type": "object",
-                            "properties": {
-                                "bookkeeping_expenses": {
-                                    "type": "integer"
-                                },
-                                "duty_expenses": {
-                                    "type": "integer"
-                                },
-                                "machine_expenses": {
-                                    "type": "integer"
-                                },
-                                "patent_expenses": {
-                                    "type": "integer"
-                                },
-                                "service_expenses": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "staff": {
-                            "type": "object",
-                            "properties": {
-                                "medical_expenses": {
-                                    "type": "integer"
-                                },
-                                "pension_expenses": {
-                                    "type": "integer"
-                                },
-                                "salaries_expenses": {
-                                    "type": "integer"
-                                },
-                                "staff_expenses": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "tax": {
-                            "type": "object",
-                            "properties": {
-                                "estate_tax": {
-                                    "type": "integer"
-                                },
-                                "income_tax": {
-                                    "type": "integer"
-                                },
-                                "land_tax": {
-                                    "type": "integer"
-                                },
-                                "tax_expenses": {
-                                    "type": "integer"
-                                }
-                            }
-                        }
-                    }
-                },
-                "total_expenses": {
-                    "type": "integer"
-                },
-                "tracker_id": {
-                    "type": "string"
                 }
             }
         },
@@ -1285,40 +984,6 @@ const docTemplate = `{
                 }
             }
         },
-        "model.GetCalculatorConstantResponse": {
-            "type": "object",
-            "properties": {
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "industries": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "machines": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "needs": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "patents": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "model.GetCommonInfoResponse": {
             "type": "object",
             "properties": {
@@ -1330,74 +995,93 @@ const docTemplate = `{
                 }
             }
         },
-        "model.GetInsightsResponse": {
+        "model.GetConstantsResponse": {
             "type": "object",
             "properties": {
-                "best_tax_system_insight": {
-                    "type": "object",
-                    "properties": {
-                        "insight": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "usual_county_insight": {
-                    "type": "object",
-                    "properties": {
-                        "insight": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "usual_expenses_insight": {
-                    "type": "object",
-                    "properties": {
-                        "insight": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "workers_quantity_insight": {
-                    "type": "object",
-                    "properties": {
-                        "insight": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "model.GetPlotsResponse": {
-            "type": "object",
-            "properties": {
-                "expenses_distribution": {
-                    "$ref": "#/definitions/model.PieChartLogic"
-                },
-                "popularity_chart": {
-                    "type": "object",
-                    "properties": {
-                        "datasets": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "additionalProperties": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "integer"
-                                    }
-                                }
+                "county_prices": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "county_id": {
+                                "type": "integer"
+                            },
+                            "county_name": {
+                                "type": "string"
+                            },
+                            "county_price": {
+                                "type": "number"
                             }
-                        },
-                        "labels": {
-                            "type": "array",
-                            "items": {
+                        }
+                    }
+                },
+                "machine_prices": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "machine_id": {
+                                "type": "integer"
+                            },
+                            "machine_name": {
+                                "type": "string"
+                            },
+                            "machine_price": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                },
+                "mean_salaries": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "industry_id": {
+                                "type": "integer"
+                            },
+                            "industry_name": {
+                                "type": "string"
+                            },
+                            "salary": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                },
+                "other_needs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "need_coeff": {
+                                "type": "number"
+                            },
+                            "need_id": {
+                                "type": "integer"
+                            },
+                            "need_name": {
                                 "type": "string"
                             }
                         }
                     }
                 },
-                "taxes_distribution": {
-                    "$ref": "#/definitions/model.PieChartLogic"
+                "patent_prices": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "patent_id": {
+                                "type": "integer"
+                            },
+                            "patent_name": {
+                                "type": "string"
+                            },
+                            "patent_price": {
+                                "type": "integer"
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -1422,169 +1106,6 @@ const docTemplate = `{
                                 "type": "string"
                             }
                         }
-                    }
-                }
-            }
-        },
-        "model.ImprovedCalculateResponse": {
-            "type": "object",
-            "properties": {
-                "input": {
-                    "type": "object",
-                    "properties": {
-                        "bookkeeping": {
-                            "type": "boolean"
-                        },
-                        "building_area": {
-                            "type": "integer"
-                        },
-                        "county": {
-                            "type": "string"
-                        },
-                        "industry": {
-                            "type": "string"
-                        },
-                        "land_area": {
-                            "type": "integer"
-                        },
-                        "machine_names": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "machine_quantities": {
-                            "type": "array",
-                            "items": {
-                                "type": "integer"
-                            }
-                        },
-                        "operations": {
-                            "type": "integer"
-                        },
-                        "organization_type": {
-                            "type": "string"
-                        },
-                        "other_needs": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "patent_type": {
-                            "type": "string"
-                        },
-                        "project_name": {
-                            "type": "string"
-                        },
-                        "tax_system": {
-                            "type": "string"
-                        },
-                        "workers_quantity": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                "link": {
-                    "type": "string"
-                },
-                "output": {
-                    "type": "object",
-                    "properties": {
-                        "estate": {
-                            "type": "object",
-                            "properties": {
-                                "building_expenses": {
-                                    "type": "integer"
-                                },
-                                "estate_expenses": {
-                                    "type": "integer"
-                                },
-                                "land_expenses": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "service": {
-                            "type": "object",
-                            "properties": {
-                                "bookkeeping_expenses": {
-                                    "type": "integer"
-                                },
-                                "duty_expenses": {
-                                    "type": "integer"
-                                },
-                                "machine_expenses": {
-                                    "type": "integer"
-                                },
-                                "patent_expenses": {
-                                    "type": "integer"
-                                },
-                                "service_expenses": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "staff": {
-                            "type": "object",
-                            "properties": {
-                                "medical_expenses": {
-                                    "type": "integer"
-                                },
-                                "pension_expenses": {
-                                    "type": "integer"
-                                },
-                                "salaries_expenses": {
-                                    "type": "integer"
-                                },
-                                "staff_expenses": {
-                                    "type": "integer"
-                                }
-                            }
-                        },
-                        "tax": {
-                            "type": "object",
-                            "properties": {
-                                "estate_tax": {
-                                    "type": "integer"
-                                },
-                                "income_tax": {
-                                    "type": "integer"
-                                },
-                                "land_tax": {
-                                    "type": "integer"
-                                },
-                                "tax_expenses": {
-                                    "type": "integer"
-                                }
-                            }
-                        }
-                    }
-                },
-                "total_expenses": {
-                    "type": "integer"
-                },
-                "tracker_id": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.PieChartLogic": {
-            "type": "object",
-            "properties": {
-                "datasets": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                "labels": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
                     }
                 }
             }
@@ -1659,6 +1180,17 @@ const docTemplate = `{
                 },
                 "internal_code": {
                     "type": "integer"
+                }
+            }
+        },
+        "model.SetActiveForElementRequest": {
+            "type": "object",
+            "properties": {
+                "elements": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.UiChangeElementLogic"
+                    }
                 }
             }
         },
@@ -1741,6 +1273,17 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/model.UiElementLogic"
                     }
+                }
+            }
+        },
+        "model.UiChangeElementLogic": {
+            "type": "object",
+            "properties": {
+                "active": {
+                    "type": "boolean"
+                },
+                "field_id": {
+                    "type": "string"
                 }
             }
         },

@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 	"database/sql"
-	"gb-auth-gate/internal/auth/model"
-	"gb-auth-gate/pkg/terrors"
+	"gb-admin-core/internal/auth/model"
+	"gb-admin-core/pkg/terrors"
 	"github.com/jmoiron/sqlx"
 	"github.com/sarulabs/di"
 )

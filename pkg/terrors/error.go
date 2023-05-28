@@ -2,8 +2,8 @@ package terrors
 
 import (
 	"fmt"
-	"gb-auth-gate/pkg/terrors/interface"
-	"gb-auth-gate/pkg/xruntime"
+	"gb-admin-core/pkg/terrors/interface"
+	"gb-admin-core/pkg/xruntime"
 	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 	"io"

@@ -65,7 +65,7 @@ func (uuc *UiUseCase) SetActiveForElements(params *model.SetActiveForElementRequ
 
 	var response common.Response
 
-	headers, err := thttpHeaders.MakeAuthHeaders("", service.PublicKey, service.PrivateKey, "GET")
+	headers, err := thttpHeaders.MakeAuthHeaders(params, service.PublicKey, service.PrivateKey, "PATCH")
 	fmt.Printf("\n%+v\n", headers)
 	rawResponse, statusCode, err := uuc.HttpClient.Request(
 		thttp.PATCH,

@@ -160,7 +160,7 @@ func (auc *AccountUseCase) GetConstants() (interface{}, uint16, error) {
 	headers, err := thttpHeaders.MakeAuthHeaders("", service.PublicKey, service.PrivateKey, "GET")
 	fmt.Printf("\n%+v\n", headers)
 	rawResponse, statusCode, err := auc.httpClient.Request(
-		thttp.PATCH,
+		thttp.GET,
 		fmt.Sprintf("%s/constant", service.URL),
 		headers,
 		nil,

@@ -1347,7 +1347,7 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0.0",
-	Host:             "gate.gb.ldt2023.infantem.tech",
+	Host:             "admin.gb.ldt2023.infantem.tech",
 	BasePath:         "",
 	Schemes:          []string{"https"},
 	Title:            "Core backend app for Leaders of Digital Transformation",

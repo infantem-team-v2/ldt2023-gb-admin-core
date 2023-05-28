@@ -13,7 +13,7 @@
         },
         "version": "1.0.0"
     },
-    "host": "gate.gb.ldt2023.infantem.tech",
+    "host": "admin.gb.ldt2023.infantem.tech",
     "paths": {
         "/account/constant": {
             "get": {

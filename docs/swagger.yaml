@@ -335,7 +335,7 @@ definitions:
       internal_code:
         type: integer
     type: object
-host: gate.gb.ldt2023.infantem.tech
+host: admin.gb.ldt2023.infantem.tech
 info:
   contact:
     email: KlenoviySir@yandex.ru

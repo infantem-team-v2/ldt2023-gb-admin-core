@@ -55,7 +55,7 @@ func (uh *UiHandler) GetCalcActiveElements() fiber.Handler {
 // @Description Set state of activity for element
 // @Tags UI, Admin
 // @Param data body model.SetActiveForElementRequest true "Fields and their states"
-// @Success 200 {object} model.GetCalcActiveElementsResponse
+// @Success 200 {object} common.Response
 // @Failure 400 {object} common.Response
 // @Failure 401 {object} common.Response
 // @Failure 403 {object} common.Response

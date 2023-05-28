@@ -302,6 +302,8 @@ definitions:
     type: object
   model.UiElementLogic:
     properties:
+      active:
+        type: boolean
       comment:
         type: string
       field:
@@ -857,7 +859,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.GetCalcActiveElementsResponse'
+            $ref: '#/definitions/common.Response'
         "400":
           description: Bad Request
           schema:

@@ -5,6 +5,7 @@ type UiElementLogic struct {
 	FieldId string        `json:"field_id"`
 	Comment string        `json:"comment"`
 	Type    string        `json:"type"`
+	Active  bool          `json:"active"`
 	Options []interface{} `json:"options"`
 }
 

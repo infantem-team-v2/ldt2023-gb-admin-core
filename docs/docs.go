@@ -789,7 +789,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/model.GetCalcActiveElementsResponse"
+                            "$ref": "#/definitions/common.Response"
                         }
                     },
                     "400": {
@@ -1290,6 +1290,9 @@ const docTemplate = `{
         "model.UiElementLogic": {
             "type": "object",
             "properties": {
+                "active": {
+                    "type": "boolean"
+                },
                 "comment": {
                     "type": "string"
                 },

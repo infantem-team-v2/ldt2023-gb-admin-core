@@ -55,12 +55,12 @@ type BaseCalculateResponse struct {
 		County            *string  `json:"county,omitempty" rus:"Административный_округ"`
 		LandArea          *int     `json:"land_area,omitempty" rus:"Площадь_участка"`
 		BuildingArea      *int     `json:"building_area,omitempty" rus:"Площадь_строительства"`
-		MachineNames      []string `json:"machine_names,omitempty" rus:"Оборудование"`
-		MachineQuantities []int    `json:"machine_quantities,omitempty" rus:"Количество_оборудования"`
+		MachineNames      []string `json:"machine_names,omitempty" rus:"-"`
+		MachineQuantities []int    `json:"machine_quantities,omitempty" rus:"-"`
 		PatentType        *string  `json:"patent_type,omitempty" rus:"Патент"`
 		Bookkeeping       *bool    `json:"bookkeeping,omitempty" rus:"Бухгалтерия"`
 		TaxSystem         *string  `json:"tax_system,omitempty" rus:"Система_налогообложения"`
 		Operations        *int     `json:"operations,omitempty" rus:"Количество_бухгалтерских_операций"`
-		OtherNeeds        []string `json:"other_needs,omitempty" rus:"Иные_потребности"`
+		OtherNeeds        []string `json:"other_needs,omitempty" rus:"-"`
 	} `json:"input" rus:"input"`
 }

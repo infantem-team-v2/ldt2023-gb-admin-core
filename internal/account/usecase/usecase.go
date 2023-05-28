@@ -161,7 +161,7 @@ func (auc *AccountUseCase) GetConstants() (interface{}, uint16, error) {
 	fmt.Printf("\n%+v\n", headers)
 	rawResponse, statusCode, err := auc.httpClient.Request(
 		thttp.GET,
-		fmt.Sprintf("%s/constant", service.URL),
+		fmt.Sprintf("%s/constant/", service.URL),
 		headers,
 		nil,
 		&response,

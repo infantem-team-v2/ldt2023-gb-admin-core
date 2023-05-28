@@ -90,7 +90,7 @@ func (s *Server) MapHandlers() *Server {
 
 	// Cross-Origin politics
 	s.App.Use(cors.New(cors.Config{
-		AllowOrigins:     "https://ldt2023.infantem.tech",
+		AllowOrigins:     "https://admin.ldt2023.infantem.tech",
 		AllowHeaders:     "Origin, X-Requested-With, Content-Type, Content-Length, Accept-Encoding, Accept, T-Public-Key, T-Signature, T-Validation-Session, Access-Control-Allow-Methods, Access-Control-Allow-Origin, Access-Control-Allow-Credentials, Access-Control-Allow-Headers",
 		AllowMethods:     "POST, PUT, GET, OPTIONS, PATCH, DELETE, HEAD",
 		AllowCredentials: true,

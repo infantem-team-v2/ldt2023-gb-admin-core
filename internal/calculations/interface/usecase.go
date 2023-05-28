@@ -7,4 +7,6 @@ type UseCase interface {
 	ImprovedCalculate(params *model.BaseCalculateRequest, userId *int) (*model.ImprovedCalculateResponse, error)
 	GetResult(trackerId string) (*model.BaseCalculateResponse, error)
 	GetConstants() (*model.GetCalculatorConstantResponse, error)
+	GetInsights(trackerId string) (*model.GetInsightsResponse, error)
+	GetPlots(trackerId string) (*model.GetPlotsResponse, error)
 }

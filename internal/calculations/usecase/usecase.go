@@ -122,3 +122,41 @@ func (cu *CalculationsUseCase) GetConstants() (*model.GetCalculatorConstantRespo
 
 	return &response, nil
 }
+
+func (cu *CalculationsUseCase) GetInsights(trackerId string) (*model.GetInsightsResponse, error) {
+	var response model.GetInsightsResponse
+	_, statusCode, err := cu.sendRequestToAPI("/calc/insights",
+		thttp.GET,
+		nil,
+		&response,
+		map[string]interface{}{
+			"trackerId": trackerId,
+		})
+	if err != nil {
+		return nil, err
+	}
+	if etc.GetCodeGroup(int(statusCode)) != etc.Successful {
+		return nil, terrors.Raise(nil, 200006)
+	}
+
+	return &response, nil
+}
+
+func (cu *CalculationsUseCase) GetPlots(trackerId string) (*model.GetPlotsResponse, error) {
+	var response model.GetPlotsResponse
+	_, statusCode, err := cu.sendRequestToAPI("/calc/plots",
+		thttp.GET,
+		nil,
+		&response,
+		map[string]interface{}{
+			"trackerId": trackerId,
+		})
+	if err != nil {
+		return nil, err
+	}
+	if etc.GetCodeGroup(int(statusCode)) != etc.Successful {
+		return nil, terrors.Raise(nil, 200006)
+	}
+
+	return &response, nil
+}

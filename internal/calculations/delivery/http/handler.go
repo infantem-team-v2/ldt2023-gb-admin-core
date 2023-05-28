@@ -120,7 +120,7 @@ func (ch *CalculationsHandler) GetResult() fiber.Handler {
 
 // GetCalculatorConstant godoc
 // @Summary Get constants for calculator's fields
-// @Description Get report by tracker id
+// @Description Get constants for calculator's fields
 // @Tags Calculator, UI
 // @Success 200 {object} model.GetCalculatorConstantResponse
 // @Failure 400 {object} common.Response
@@ -136,6 +136,62 @@ func (ch *CalculationsHandler) GetCalculatorConstant() fiber.Handler {
 		if err != nil {
 			return err
 		}
+		return ctx.JSON(response)
+	}
+}
+
+// GetInsights godoc
+// @Summary Get insights for report
+// @Description Get report by tracker id
+// @Tags Calculator, Analytics
+// @Success 200 {object} model.GetInsightsResponse
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Failure 422 {object} common.Response
+// @Router /calc/insights/:trackerId [get]
+func (ch *CalculationsHandler) GetInsights() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		trackerId := ctx.Params("trackerId", "")
+		if trackerId == "" {
+			return terrors.Raise(nil, 100019)
+		}
+
+		response, err := ch.CalculationsUC.GetInsights(trackerId)
+		if err != nil {
+			return err
+		}
+
+		return ctx.JSON(response)
+	}
+}
+
+// GetPlots godoc
+// @Summary Get plots for report
+// @Description Get report by tracker id
+// @Tags Calculator, Analytics
+// @Success 200 {object} model.GetPlotsResponse
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Failure 422 {object} common.Response
+// @Router /calc/plots/:trackerId [get]
+func (ch *CalculationsHandler) GetPlots() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		trackerId := ctx.Params("trackerId", "")
+		if trackerId == "" {
+			return terrors.Raise(nil, 100019)
+		}
+
+		response, err := ch.CalculationsUC.GetPlots(trackerId)
+		if err != nil {
+			return err
+		}
+
 		return ctx.JSON(response)
 	}
 }

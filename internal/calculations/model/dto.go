@@ -64,3 +64,27 @@ type BaseCalculateResponse struct {
 		OtherNeeds        []string `json:"other_needs,omitempty" rus:"Иные_потребности"`
 	} `json:"input" rus:"input"`
 }
+
+type GetInsightsResponse struct {
+	UsualExpensesInsight struct {
+		Insight string `json:"insight"`
+	} `json:"usual_expenses_insight"`
+	UsualCountyInsight struct {
+		Insight string `json:"insight"`
+	} `json:"usual_county_insight"`
+	WorkersQuantityInsight struct {
+		Insight string `json:"insight"`
+	} `json:"workers_quantity_insight"`
+	BestTaxSystemInsight struct {
+		Insight string `json:"insight"`
+	} `json:"best_tax_system_insight"`
+}
+
+type GetPlotsResponse struct {
+	ExpensesDistribution PieChartLogic `json:"expenses_distribution"`
+	TaxesDistribution    PieChartLogic `json:"taxes_distribution"`
+	PopularityChart      struct {
+		Labels   []string           `json:"labels"`
+		Datasets []map[string][]int `json:"datasets"`
+	} `json:"popularity_chart"`
+}

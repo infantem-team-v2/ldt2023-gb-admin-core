@@ -68,3 +68,8 @@ type CalcResponseLogic struct {
 		OtherNeeds        []string `json:"other_needs,omitempty"`
 	} `json:"input"`
 }
+
+type PieChartLogic struct {
+	Labels   []string         `json:"labels"`
+	Datasets []map[string]int `json:"datasets"`
+}

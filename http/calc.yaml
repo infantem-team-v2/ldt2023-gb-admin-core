@@ -13,3 +13,11 @@ GetResult:
 GetCalculatorConstant:
   httpMethod: GET
   route: /fields
+
+GetInsights:
+  httpMethod: GET
+  route: /insights/:trackerId
+
+GetPlots:
+  httpMethod: GET
+  route: /plots/:trackerId

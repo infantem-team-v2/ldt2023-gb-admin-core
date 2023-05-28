@@ -76,8 +76,7 @@ definitions:
       industry:
         type: string
       land_area:
-        example: "0"
-        type: string
+        type: integer
       machine_names:
         items:
           type: string
@@ -246,6 +245,51 @@ definitions:
       personal_data:
         $ref: '#/definitions/internal_account_model.PersonalDataLogic'
     type: object
+  model.GetInsightsResponse:
+    properties:
+      best_tax_system_insight:
+        properties:
+          insight:
+            type: string
+        type: object
+      usual_county_insight:
+        properties:
+          insight:
+            type: string
+        type: object
+      usual_expenses_insight:
+        properties:
+          insight:
+            type: string
+        type: object
+      workers_quantity_insight:
+        properties:
+          insight:
+            type: string
+        type: object
+    type: object
+  model.GetPlotsResponse:
+    properties:
+      expenses_distribution:
+        $ref: '#/definitions/model.PieChartLogic'
+      popularity_chart:
+        properties:
+          datasets:
+            items:
+              additionalProperties:
+                items:
+                  type: integer
+                type: array
+              type: object
+            type: array
+          labels:
+            items:
+              type: string
+            type: array
+        type: object
+      taxes_distribution:
+        $ref: '#/definitions/model.PieChartLogic'
+    type: object
   model.GetResultsByUserResponse:
     properties:
       results:
@@ -354,6 +398,19 @@ definitions:
         type: integer
       tracker_id:
         type: string
+    type: object
+  model.PieChartLogic:
+    properties:
+      datasets:
+        items:
+          additionalProperties:
+            type: integer
+          type: object
+        type: array
+      labels:
+        items:
+          type: string
+        type: array
     type: object
   model.PrepareResetPasswordRequest:
     properties:
@@ -951,7 +1008,7 @@ paths:
       - Calculator
   /calc/fields:
     get:
-      description: Get report by tracker id
+      description: Get constants for calculator's fields
       responses:
         "200":
           description: OK
@@ -985,6 +1042,78 @@ paths:
       tags:
       - Calculator
       - UI
+  /calc/insights/:trackerId:
+    get:
+      description: Get report by tracker id
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetInsightsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Get insights for report
+      tags:
+      - Calculator
+      - Analytics
+  /calc/plots/:trackerId:
+    get:
+      description: Get report by tracker id
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.GetPlotsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Get plots for report
+      tags:
+      - Calculator
+      - Analytics
   /calc/report/:trackerId:
     get:
       description: Get report by tracker id

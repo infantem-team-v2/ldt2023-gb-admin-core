@@ -693,7 +693,7 @@ const docTemplate = `{
         },
         "/calc/fields": {
             "get": {
-                "description": "Get report by tracker id",
+                "description": "Get constants for calculator's fields",
                 "tags": [
                     "Calculator",
                     "UI"
@@ -704,6 +704,114 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.GetCalculatorConstantResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/calc/insights/:trackerId": {
+            "get": {
+                "description": "Get report by tracker id",
+                "tags": [
+                    "Calculator",
+                    "Analytics"
+                ],
+                "summary": "Get insights for report",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetInsightsResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "schema": {
+                            "$ref": "#/definitions/common.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/calc/plots/:trackerId": {
+            "get": {
+                "description": "Get report by tracker id",
+                "tags": [
+                    "Calculator",
+                    "Analytics"
+                ],
+                "summary": "Get plots for report",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.GetPlotsResponse"
                         }
                     },
                     "400": {
@@ -961,8 +1069,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "land_area": {
-                    "type": "string",
-                    "example": "0"
+                    "type": "integer"
                 },
                 "machine_names": {
                     "type": "array",
@@ -1223,6 +1330,77 @@ const docTemplate = `{
                 }
             }
         },
+        "model.GetInsightsResponse": {
+            "type": "object",
+            "properties": {
+                "best_tax_system_insight": {
+                    "type": "object",
+                    "properties": {
+                        "insight": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "usual_county_insight": {
+                    "type": "object",
+                    "properties": {
+                        "insight": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "usual_expenses_insight": {
+                    "type": "object",
+                    "properties": {
+                        "insight": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "workers_quantity_insight": {
+                    "type": "object",
+                    "properties": {
+                        "insight": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "model.GetPlotsResponse": {
+            "type": "object",
+            "properties": {
+                "expenses_distribution": {
+                    "$ref": "#/definitions/model.PieChartLogic"
+                },
+                "popularity_chart": {
+                    "type": "object",
+                    "properties": {
+                        "datasets": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                }
+                            }
+                        },
+                        "labels": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "taxes_distribution": {
+                    "$ref": "#/definitions/model.PieChartLogic"
+                }
+            }
+        },
         "model.GetResultsByUserResponse": {
             "type": "object",
             "properties": {
@@ -1388,6 +1566,26 @@ const docTemplate = `{
                 },
                 "tracker_id": {
                     "type": "string"
+                }
+            }
+        },
+        "model.PieChartLogic": {
+            "type": "object",
+            "properties": {
+                "datasets": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "integer"
+                        }
+                    }
+                },
+                "labels": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             }
         },

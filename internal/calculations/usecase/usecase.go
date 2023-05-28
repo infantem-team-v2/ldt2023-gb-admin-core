@@ -130,7 +130,7 @@ func (cu *CalculationsUseCase) GetInsights(trackerId string) (*model.GetInsights
 		nil,
 		&response,
 		map[string]interface{}{
-			"trackerId": trackerId,
+			"tracker_id": trackerId,
 		})
 	if err != nil {
 		return nil, err
@@ -149,7 +149,7 @@ func (cu *CalculationsUseCase) GetPlots(trackerId string) (*model.GetPlotsRespon
 		nil,
 		&response,
 		map[string]interface{}{
-			"trackerId": trackerId,
+			"tracker_id": trackerId,
 		})
 	if err != nil {
 		return nil, err

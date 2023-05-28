@@ -149,6 +149,37 @@ func (auc *AccountUseCase) UpdateConstants(params *model.ChangeConstantsRequest)
 	return response, statusCode, nil
 }
 
+func (auc *AccountUseCase) InsertConstants(params *model.ChangeConstantsRequest) (interface{}, uint16, error) {
+	service, err := auc.authUC.GetAuthServiceByName(model.PdsCalcService)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	var response common.Response
+
+	headers, err := thttpHeaders.MakeAuthHeaders(params, service.PublicKey, service.PrivateKey, "POST")
+	fmt.Printf("\n%+v\n", headers)
+	rawResponse, statusCode, err := auc.httpClient.Request(
+		thttp.POST,
+		fmt.Sprintf("%s/constant/new", service.URL),
+		headers,
+		params,
+		&response,
+		nil,
+	)
+	if err != nil {
+		return nil, 0, terrors.Raise(err, 200005)
+	}
+	if statusCode != 200 {
+		var commonResponse common.Response
+		if err := json.Unmarshal(rawResponse, &commonResponse); err != nil {
+			return nil, 0, terrors.Raise(err, 200005)
+		}
+		return commonResponse, statusCode, nil
+	}
+	return response, statusCode, nil
+}
+
 func (auc *AccountUseCase) GetConstants() (interface{}, uint16, error) {
 	service, err := auc.authUC.GetAuthServiceByName(model.PdsCalcService)
 	if err != nil {

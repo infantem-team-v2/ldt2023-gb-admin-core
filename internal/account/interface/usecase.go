@@ -7,5 +7,6 @@ type UseCase interface {
 	UpdateUserInfo(userId int64, params *model.UpdateUserInfoRequest) (*model.GetCommonInfoResponse, error)
 	GetResultsByUser(userId int64) (interface{}, uint16, error)
 	UpdateConstants(params *model.ChangeConstantsRequest) (interface{}, uint16, error)
+	InsertConstants(params *model.ChangeConstantsRequest) (interface{}, uint16, error)
 	GetConstants() (interface{}, uint16, error)
 }

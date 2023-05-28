@@ -17,3 +17,7 @@ ChangeConstants:
 GetConstants:
   httpMethod: GET
   route: /constant
+
+InsertConstants:
+  httpMethod: POST
+  route: /constant

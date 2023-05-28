@@ -420,6 +420,44 @@ paths:
       tags:
       - Account
       - Admin
+    post:
+      description: Endpoint to change constants
+      parameters:
+      - description: Insert constants body
+        in: body
+        name: updated_data
+        required: true
+        schema:
+          $ref: '#/definitions/model.ChangeConstantsRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/common.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/common.Response'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/common.Response'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/common.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/common.Response'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/common.Response'
+      summary: Insert new constants for formula
+      tags:
+      - Account
+      - Admin
   /account/info:
     get:
       description: Endpoint to get information about user

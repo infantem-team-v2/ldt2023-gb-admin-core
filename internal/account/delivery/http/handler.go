@@ -129,6 +129,32 @@ func (ah *AccountHandler) ChangeConstants() fiber.Handler {
 	}
 }
 
+// InsertConstants godoc
+// @Summary Insert new constants for formula
+// @Description Endpoint to change constants
+// @Tags Account, Admin
+// @Param updated_data body model.ChangeConstantsRequest true "Insert constants body"
+// @Success 200 {object} common.Response
+// @Failure 400 {object} common.Response
+// @Failure 401 {object} common.Response
+// @Failure 403 {object} common.Response
+// @Failure 404 {object} common.Response
+// @Failure 409 {object} common.Response
+// @Router /account/constant [post]
+func (ah *AccountHandler) InsertConstants() fiber.Handler {
+	return func(ctx *fiber.Ctx) error {
+		var params model.ChangeConstantsRequest
+		if err := server.ReadRequest(ctx, &params); err != nil {
+			return terrors.Raise(err, 100001)
+		}
+		response, statusCode, err := ah.AccountUC.InsertConstants(&params)
+		if err != nil {
+			return err
+		}
+		return ctx.Status(int(statusCode)).JSON(response)
+	}
+}
+
 // GetConstants godoc
 // @Summary Get all constants for formula
 // @Description
